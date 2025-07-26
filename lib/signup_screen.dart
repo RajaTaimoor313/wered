@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -104,16 +105,9 @@ class SignupScreen extends StatelessWidget {
                       SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                     
                       // Username field
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
                         child: TextField(
                           keyboardType: TextInputType.text,
                           autofillHints: const [],
@@ -124,12 +118,25 @@ class SignupScreen extends StatelessWidget {
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            hintText: 'Username',
-                            hintStyle: TextStyle(
+                            labelText: 'Username',
+                            labelStyle: TextStyle(
                               color: Colors.white60,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
-                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: MediaQuery.of(context).size.width * 0.05,
                               vertical: MediaQuery.of(context).size.height * 0.02,
@@ -141,16 +148,9 @@ class SignupScreen extends StatelessWidget {
                       SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       
                       // Email field
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
                         child: TextField(
                           keyboardType: TextInputType.emailAddress,
                           autofillHints: const [AutofillHints.email],
@@ -161,12 +161,25 @@ class SignupScreen extends StatelessWidget {
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            hintText: 'Email',
-                            hintStyle: TextStyle(
+                            labelText: 'Email',
+                            labelStyle: TextStyle(
                               color: Colors.white60,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
-                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: MediaQuery.of(context).size.width * 0.05,
                               vertical: MediaQuery.of(context).size.height * 0.02,
@@ -178,16 +191,9 @@ class SignupScreen extends StatelessWidget {
                       SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       
                       // Password field
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
                         child: TextField(
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
@@ -199,12 +205,25 @@ class SignupScreen extends StatelessWidget {
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            hintText: 'Password',
-                            hintStyle: TextStyle(
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
                               color: Colors.white60,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
-                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: MediaQuery.of(context).size.width * 0.05,
                               vertical: MediaQuery.of(context).size.height * 0.02,
@@ -253,7 +272,12 @@ class SignupScreen extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              );
+                            },
                             child: Text(
                               'Login',
                               style: TextStyle(
