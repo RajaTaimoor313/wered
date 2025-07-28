@@ -85,37 +85,56 @@ class LoginScreen extends StatelessWidget {
                           physics: const ClampingScrollPhysics(),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: MediaQuery.of(context).size.width * 0.06,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.06,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.10),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.10,
+                                ),
                                 // Title
                                 Text(
-                                  'Login',
+                                  languageProvider.isArabic
+                                      ? 'تسجيل الدخول'
+                                      : 'Login',
                                   style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.width * 0.08,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                        0.08,
                                     fontWeight: FontWeight.bold,
                                     color: themeProvider.primaryTextColor,
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.02,
+                                ),
                                 // Subtitle
                                 Text(
-                                  'Welcome back. Continue your path of remembrance, reflection, and worship with ease.',
+                                  languageProvider.isArabic
+                                      ? 'مرحبًا بعودتك. واصل طريقك في الذكر والتأمل والعبادة بسهولة.'
+                                      : 'Welcome back. Continue your path of remembrance, reflection, and worship with ease.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                        0.04,
                                     color: themeProvider.secondaryTextColor,
                                     height: 1.5,
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
+                                ),
                                 // Username field
                                 SizedBox(
                                   width: double.infinity,
-                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
                                   child: TextField(
                                     keyboardType: TextInputType.text,
                                     autofillHints: const [],
@@ -123,13 +142,19 @@ class LoginScreen extends StatelessWidget {
                                     autocorrect: false,
                                     style: TextStyle(
                                       color: themeProvider.primaryTextColor,
-                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
                                     ),
                                     decoration: InputDecoration(
-                                      labelText: 'Username',
+                                      labelText: languageProvider.isArabic
+                                          ? 'اسم المستخدم'
+                                          : 'Username',
                                       labelStyle: TextStyle(
                                         color: themeProvider.secondaryTextColor,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.04,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
@@ -146,32 +171,48 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        horizontal: MediaQuery.of(context).size.width * 0.05,
-                                        vertical: MediaQuery.of(context).size.height * 0.02,
+                                        horizontal:
+                                            MediaQuery.of(context).size.width *
+                                            0.05,
+                                        vertical:
+                                            MediaQuery.of(context).size.height *
+                                            0.02,
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.02,
+                                ),
                                 // Password field
                                 SizedBox(
                                   width: double.infinity,
-                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
                                   child: TextField(
                                     obscureText: true,
                                     keyboardType: TextInputType.visiblePassword,
-                                    autofillHints: const [AutofillHints.password],
+                                    autofillHints: const [
+                                      AutofillHints.password,
+                                    ],
                                     enableSuggestions: true,
                                     autocorrect: false,
                                     style: TextStyle(
                                       color: themeProvider.primaryTextColor,
-                                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
                                     ),
                                     decoration: InputDecoration(
-                                      labelText: 'Password',
+                                      labelText: languageProvider.isArabic
+                                          ? 'كلمة المرور'
+                                          : 'Password',
                                       labelStyle: TextStyle(
                                         color: themeProvider.secondaryTextColor,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.04,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
@@ -188,13 +229,21 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        horizontal: MediaQuery.of(context).size.width * 0.05,
-                                        vertical: MediaQuery.of(context).size.height * 0.02,
+                                        horizontal:
+                                            MediaQuery.of(context).size.width *
+                                            0.05,
+                                        vertical:
+                                            MediaQuery.of(context).size.height *
+                                            0.02,
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
                                 // Forget Password link
                                 Container(
                                   alignment: Alignment.centerRight,
@@ -202,86 +251,127 @@ class LoginScreen extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const ForgetPassScreen()),
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ForgetPassScreen(),
+                                        ),
                                       );
                                     },
                                     style: TextButton.styleFrom(
-                                      foregroundColor: themeProvider.secondaryTextColor,
+                                      foregroundColor:
+                                          themeProvider.secondaryTextColor,
                                       padding: EdgeInsets.zero,
                                       minimumSize: Size(0, 0),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
                                     ),
                                     child: Text(
-                                      'Forget Password?',
+                                      languageProvider.isArabic
+                                          ? 'نسيت كلمة المرور؟'
+                                          : 'Forget Password?',
                                       style: TextStyle(
                                         color: themeProvider.secondaryTextColor,
-                                        fontSize: MediaQuery.of(context).size.width * 0.038,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.038,
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.025,
+                                ),
                                 // Login button
                                 SizedBox(
                                   width: double.infinity,
-                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
                                   child: ElevatedButton(
                                     onPressed: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreen(),
+                                        ),
                                       );
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: themeProvider.isDarkMode 
-                                          ? const Color(0xFF1F1F1F) 
+                                      backgroundColor: themeProvider.isDarkMode
+                                          ? const Color(0xFF1F1F1F)
                                           : const Color(0xFF2D1B69),
-                                      foregroundColor: themeProvider.primaryTextColor,
+                                      foregroundColor:
+                                          themeProvider.primaryTextColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
                                       elevation: 0,
                                     ),
                                     child: Text(
-                                      'Login',
+                                      languageProvider.isArabic
+                                          ? 'تسجيل الدخول'
+                                          : 'Login',
                                       style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.045,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.045,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
+                                ),
                                 // Sign Up link
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Don't have account? ",
+                                      languageProvider.isArabic
+                                          ? 'ليس لديك حساب؟ '
+                                          : "Don't have account? ",
                                       style: TextStyle(
                                         color: themeProvider.secondaryTextColor,
-                                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.04,
                                       ),
                                     ),
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => const SignupScreen()),
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignupScreen(),
+                                          ),
                                         );
                                       },
                                       child: Text(
-                                        'Sign Up',
+                                        languageProvider.isArabic
+                                            ? 'إنشاء حساب'
+                                            : 'Sign Up',
                                         style: TextStyle(
                                           color: themeProvider.primaryTextColor,
-                                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.08,
+                                ),
                               ],
                             ),
                           ),

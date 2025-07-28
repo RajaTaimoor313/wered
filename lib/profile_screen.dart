@@ -5,6 +5,8 @@ import 'login_screen.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
 import 'app_localizations.dart';
+import 'khitma_screen.dart';
+import 'bottom_nav_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -35,6 +37,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           break;
         case 2:
           // Navigate to Khitma screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const KhitmaScreen()),
+          );
           break;
         case 3:
           // Navigate to Groups screen
@@ -47,7 +53,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _showLanguageDialog(BuildContext context) {
-    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    final languageProvider = Provider.of<LanguageProvider>(
+      context,
+      listen: false,
+    );
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final appLocalizations = AppLocalizations.of(context)!;
 
@@ -131,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (shouldLogout == true) {
       // Perform logout
       await themeProvider.logout();
-      
+
       // Navigate to login screen
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -144,7 +153,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Consumer2<ThemeProvider, LanguageProvider>(
       builder: (context, themeProvider, languageProvider, child) {
-        
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
@@ -205,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            bottomNavigationBar: _BottomNavigationBar(
+            bottomNavigationBar: BottomNavBar(
               selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
             ),
@@ -224,8 +232,7 @@ class _HeaderWithBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-        final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Row(
           children: [
             // Back Button
@@ -253,7 +260,7 @@ class _HeaderWithBackButton extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  appLocalizations.profile,
+                  AppLocalizations.of(context)!.profile,
                   style: TextStyle(
                     color: themeProvider.primaryTextColor,
                     fontSize: 20,
@@ -263,10 +270,7 @@ class _HeaderWithBackButton extends StatelessWidget {
               ),
             ),
             // Empty space to balance the back button
-            SizedBox(
-              width: 44,
-              height: 44,
-            ),
+            SizedBox(width: 44, height: 44),
           ],
         );
       },
@@ -280,8 +284,8 @@ class _ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, LanguageProvider>(
+      builder: (context, themeProvider, languageProvider, child) {
         return Center(
           child: Column(
             children: [
@@ -291,7 +295,10 @@ class _ProfileHeader extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: themeProvider.borderColor, width: 3),
+                  border: Border.all(
+                    color: themeProvider.borderColor,
+                    width: 3,
+                  ),
                 ),
                 child: ClipOval(
                   child: Container(
@@ -308,10 +315,10 @@ class _ProfileHeader extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               // Name
-              const Text(
-                "Ali Shahwaiz",
+              Text(
+                languageProvider.isArabic ? 'علي شهوَيز' : 'Ali Shahwaiz',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: themeProvider.primaryTextColor,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
@@ -339,7 +346,7 @@ class _ContentSections extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Column(
           children: [
             // Account Info Section
@@ -370,7 +377,9 @@ class _ContentSections extends StatelessWidget {
                 ),
                 _SectionItem(
                   icon: Icons.dark_mode,
-                  title: themeProvider.isDarkMode ? appLocalizations.lightMode : appLocalizations.darkMode,
+                  title: themeProvider.isDarkMode
+                      ? appLocalizations.lightMode
+                      : appLocalizations.darkMode,
                   onTap: () {
                     themeProvider.toggleTheme();
                   },
@@ -452,10 +461,7 @@ class _SectionCard extends StatelessWidget {
   final String title;
   final List<_SectionItem> items;
 
-  const _SectionCard({
-    required this.title,
-    required this.items,
-  });
+  const _SectionCard({required this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -558,124 +564,3 @@ class _SectionItem extends StatelessWidget {
     );
   }
 }
-
-// Optimized Bottom Navigation Bar
-class _BottomNavigationBar extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemTapped;
-
-  const _BottomNavigationBar({
-    required this.selectedIndex,
-    required this.onItemTapped,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        final appLocalizations = AppLocalizations.of(context)!;
-        
-        return Container(
-          decoration: BoxDecoration(
-            color: themeProvider.backgroundColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _NavItem(
-                    icon: Icons.home,
-                    label: appLocalizations.home,
-                    isSelected: selectedIndex == 0,
-                    onTap: () => onItemTapped(0),
-                  ),
-                  _NavItem(
-                    icon: Icons.favorite,
-                    label: appLocalizations.dhikr,
-                    isSelected: selectedIndex == 1,
-                    onTap: () => onItemTapped(1),
-                  ),
-                  _NavItem(
-                    icon: Icons.menu_book,
-                    label: appLocalizations.khitma,
-                    isSelected: selectedIndex == 2,
-                    onTap: () => onItemTapped(2),
-                  ),
-                  _NavItem(
-                    icon: Icons.group,
-                    label: appLocalizations.groups,
-                    isSelected: selectedIndex == 3,
-                    onTap: () => onItemTapped(3),
-                  ),
-                  _NavItem(
-                    icon: Icons.person,
-                    label: appLocalizations.profile,
-                    isSelected: selectedIndex == 4,
-                    onTap: () => onItemTapped(4),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-// Optimized Navigation Item
-class _NavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        final selectedColor = themeProvider.primaryTextColor;
-        final unselectedColor = themeProvider.secondaryTextColor;
-        
-        return GestureDetector(
-          onTap: onTap,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                color: isSelected ? selectedColor : unselectedColor,
-                size: 24,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  color: isSelected ? selectedColor : unselectedColor,
-                  fontSize: 12,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-} 

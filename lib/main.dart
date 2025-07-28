@@ -5,6 +5,7 @@ import 'splash_screen.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
 import 'app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
@@ -50,6 +51,10 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
+            fontFamily: null, // Remove default fontFamily
+            textTheme: languageProvider.isArabic
+                ? GoogleFonts.amiriTextTheme(Theme.of(context).textTheme)
+                : GoogleFonts.manropeTextTheme(Theme.of(context).textTheme),
           ),
           home: const SplashScreen(),
           debugShowCheckedModeBanner: false,

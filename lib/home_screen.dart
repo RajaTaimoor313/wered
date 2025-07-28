@@ -4,6 +4,8 @@ import 'profile_screen.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
 import 'app_localizations.dart';
+import 'khitma_screen.dart';
+import 'bottom_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,6 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case 2:
           // Navigate to Khitma screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const KhitmaScreen()),
+          );
           break;
         case 3:
           // Navigate to Groups screen
@@ -49,13 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer2<ThemeProvider, LanguageProvider>(
       builder: (context, themeProvider, languageProvider, child) {
-        
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -69,9 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Positioned.fill(
                     child: Image.asset(
                       'assets/background_elements/3_background.png',
-            fit: BoxFit.cover,
+                      fit: BoxFit.cover,
                       cacheWidth: 800, // Optimize memory usage
-                      filterQuality: FilterQuality.medium, // Balance quality and performance
+                      filterQuality: FilterQuality
+                          .medium, // Balance quality and performance
                     ),
                   ),
                   // Color overlay based on theme
@@ -82,15 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // Main content
                   SafeArea(
-          child: Padding(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             const SizedBox(height: 25),
-                // Profile & Notification
+                            // Profile & Notification
                             _ProfileSection(),
                             const SizedBox(height: 20),
                             // Overall Progress
@@ -110,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            bottomNavigationBar: _BottomNavigationBar(
+            bottomNavigationBar: BottomNavBar(
               selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
             ),
@@ -130,17 +136,19 @@ class _ProfileSection extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
                     );
                   },
                   child: Container(
@@ -149,7 +157,10 @@ class _ProfileSection extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: themeProvider.cardBackgroundColor,
-                      border: Border.all(color: themeProvider.borderColor, width: 2),
+                      border: Border.all(
+                        color: themeProvider.borderColor,
+                        width: 2,
+                      ),
                     ),
                     child: Icon(
                       Icons.person,
@@ -197,7 +208,7 @@ class _ProgressSection extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -210,9 +221,9 @@ class _ProgressSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
+            Row(
+              children: [
+                Expanded(
                   child: _ProgressCard(
                     title: appLocalizations.dhikrGoal,
                     progress: 0.5,
@@ -223,7 +234,7 @@ class _ProgressSection extends StatelessWidget {
                 Expanded(
                   child: _ProgressCard(
                     title: appLocalizations.khitmaGoal,
-                        progress: 0.5,
+                    progress: 0.5,
                     subtitle: appLocalizations.juzzOutOf,
                   ),
                 ),
@@ -279,7 +290,9 @@ class _ProgressCard extends StatelessWidget {
                     CircularProgressIndicator(
                       value: progress,
                       strokeWidth: 8,
-                      valueColor: AlwaysStoppedAnimation<Color>(themeProvider.primaryTextColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        themeProvider.primaryTextColor,
+                      ),
                       backgroundColor: themeProvider.borderColor,
                     ),
                     Text(
@@ -320,7 +333,7 @@ class _StreakSection extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -333,15 +346,15 @@ class _StreakSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-                Container(
+            Container(
               padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
+              decoration: BoxDecoration(
                 color: themeProvider.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: themeProvider.borderColor),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
@@ -378,19 +391,19 @@ class _StreakSection extends StatelessWidget {
                             ),
                           ),
                         ],
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        'assets/background_elements/4.png',
-                        width: 60,
-                        height: 60,
-                    cacheWidth: 120, // Optimize memory usage
-                    filterQuality: FilterQuality.medium,
                       ),
                     ],
                   ),
-                ),
+                  Image.asset(
+                    'assets/background_elements/4.png',
+                    width: 60,
+                    height: 60,
+                    cacheWidth: 120, // Optimize memory usage
+                    filterQuality: FilterQuality.medium,
+                  ),
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -407,7 +420,7 @@ class _MotivationalVerseSection extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -420,11 +433,13 @@ class _MotivationalVerseSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
+            Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                color: themeProvider.isDarkMode ? const Color(0xFFF5F5DC) : const Color(0xFF2D1B69),
+              decoration: BoxDecoration(
+                color: themeProvider.isDarkMode
+                    ? const Color(0xFFF5F5DC)
+                    : const Color(0xFF2D1B69),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -433,9 +448,9 @@ class _MotivationalVerseSection extends StatelessWidget {
                     offset: const Offset(0, 4),
                   ),
                 ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Decorative corner elements
                   Row(
@@ -445,27 +460,37 @@ class _MotivationalVerseSection extends StatelessWidget {
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          color: themeProvider.isDarkMode
+                              ? const Color(0xFF8B4513)
+                              : Colors.white,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(4),
+                          ),
                         ),
                       ),
                       Container(
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          color: themeProvider.isDarkMode
+                              ? const Color(0xFF8B4513)
+                              : Colors.white,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(4),
+                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                      Text(
+                  Text(
                     appLocalizations.verseText,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                      color: themeProvider.isDarkMode ? const Color(0xFF2D1B69) : Colors.white,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: themeProvider.isDarkMode
+                          ? const Color(0xFF2D1B69)
+                          : Colors.white,
                       fontSize: 16,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
@@ -478,7 +503,9 @@ class _MotivationalVerseSection extends StatelessWidget {
                       Expanded(
                         child: Container(
                           height: 1,
-                          color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
+                          color: themeProvider.isDarkMode
+                              ? const Color(0xFF8B4513)
+                              : Colors.white,
                         ),
                       ),
                       Container(
@@ -486,14 +513,18 @@ class _MotivationalVerseSection extends StatelessWidget {
                         width: 8,
                         height: 8,
                         decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
+                          color: themeProvider.isDarkMode
+                              ? const Color(0xFF8B4513)
+                              : Colors.white,
                           shape: BoxShape.circle,
                         ),
                       ),
                       Expanded(
                         child: Container(
                           height: 1,
-                          color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
+                          color: themeProvider.isDarkMode
+                              ? const Color(0xFF8B4513)
+                              : Colors.white,
                         ),
                       ),
                     ],
@@ -502,7 +533,9 @@ class _MotivationalVerseSection extends StatelessWidget {
                   Text(
                     appLocalizations.surahAnNahl,
                     style: TextStyle(
-                      color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
+                      color: themeProvider.isDarkMode
+                          ? const Color(0xFF8B4513)
+                          : Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -511,135 +544,16 @@ class _MotivationalVerseSection extends StatelessWidget {
                   Text(
                     "(16:128)",
                     style: TextStyle(
-                      color: themeProvider.isDarkMode ? const Color(0xFF8B4513) : Colors.white,
+                      color: themeProvider.isDarkMode
+                          ? const Color(0xFF8B4513)
+                          : Colors.white,
                       fontSize: 12,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           ],
-        );
-      },
-    );
-  }
-}
-
-// Optimized Bottom Navigation Bar
-class _BottomNavigationBar extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemTapped;
-
-  const _BottomNavigationBar({
-    required this.selectedIndex,
-    required this.onItemTapped,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        final appLocalizations = AppLocalizations.of(context)!;
-        
-        return Container(
-          decoration: BoxDecoration(
-            color: themeProvider.backgroundColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _NavItem(
-                    icon: Icons.home,
-                    label: appLocalizations.home,
-                    isSelected: selectedIndex == 0,
-                    onTap: () => onItemTapped(0),
-                  ),
-                  _NavItem(
-                    icon: Icons.favorite,
-                    label: appLocalizations.dhikr,
-                    isSelected: selectedIndex == 1,
-                    onTap: () => onItemTapped(1),
-                  ),
-                  _NavItem(
-                    icon: Icons.menu_book,
-                    label: appLocalizations.khitma,
-                    isSelected: selectedIndex == 2,
-                    onTap: () => onItemTapped(2),
-                  ),
-                  _NavItem(
-                    icon: Icons.group,
-                    label: appLocalizations.groups,
-                    isSelected: selectedIndex == 3,
-                    onTap: () => onItemTapped(3),
-                  ),
-                  _NavItem(
-                    icon: Icons.person,
-                    label: appLocalizations.profile,
-                    isSelected: selectedIndex == 4,
-                    onTap: () => onItemTapped(4),
-          ),
-        ],
-      ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-// Optimized Navigation Item
-class _NavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        final selectedColor = themeProvider.primaryTextColor;
-        final unselectedColor = themeProvider.secondaryTextColor;
-        
-        return GestureDetector(
-          onTap: onTap,
-      child: Column(
-            mainAxisSize: MainAxisSize.min,
-        children: [
-              Icon(
-                icon,
-                color: isSelected ? selectedColor : unselectedColor,
-                size: 24,
-              ),
-              const SizedBox(height: 4),
-          Text(
-                label,
-                style: TextStyle(
-                  color: isSelected ? selectedColor : unselectedColor,
-                  fontSize: 12,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
         );
       },
     );

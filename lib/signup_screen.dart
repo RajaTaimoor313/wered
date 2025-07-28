@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login_screen.dart';
+import 'theme_provider.dart';
+import 'language_provider.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer2<ThemeProvider, LanguageProvider>(
+      builder: (context, themeProvider, languageProvider, child) {
+        return Directionality(
+          textDirection: languageProvider.textDirection,
+          child: Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () {
@@ -16,15 +23,11 @@ class SignupScreen extends StatelessWidget {
         child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF2D1B69),
-              Color(0xFF6B46C1),
-              Color(0xFF8B5CF6),
-            ],
+            colors: themeProvider.gradientColors,
           ),
         ),
         child: Stack(
@@ -32,8 +35,16 @@ class SignupScreen extends StatelessWidget {
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'assets/background_elements/3_background.png',
+                themeProvider.backgroundImage3,
                 fit: BoxFit.cover,
+                cacheWidth: 800,
+                filterQuality: FilterQuality.medium,
+              ),
+            ),
+            // Color overlay based on theme
+            Positioned.fill(
+              child: Container(
+                color: themeProvider.backgroundImageOverlay,
               ),
             ),
             
@@ -42,9 +53,11 @@ class SignupScreen extends StatelessWidget {
               top: 0,
               left: 20,
               child: Image.asset(
-                'assets/background_elements/1.png',
+                themeProvider.backgroundImage1,
                 height: 150,
                 fit: BoxFit.contain,
+                cacheWidth: 300,
+                filterQuality: FilterQuality.medium,
               ),
             ),
             
@@ -54,9 +67,11 @@ class SignupScreen extends StatelessWidget {
               left: 0,
               right: 0,
               child: Image.asset(
-                'assets/background_elements/2.png',
+                themeProvider.backgroundImage2,
                 height: 300,
                 fit: BoxFit.contain,
+                cacheWidth: 600,
+                filterQuality: FilterQuality.medium,
               ),
             ),
             
@@ -81,11 +96,11 @@ class SignupScreen extends StatelessWidget {
                       
                       // Title
                       Text(
-                        'Sign Up',
+                        languageProvider.isArabic ? 'إنشاء حساب' : 'Sign Up',
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.08,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: themeProvider.primaryTextColor,
                         ),
                       ),
                       
@@ -93,11 +108,13 @@ class SignupScreen extends StatelessWidget {
                       
                       // Subtitle
                       Text(
-                        'Join to start your spiritual journey. Track your Khitma, Dhikr and more.',
+                        languageProvider.isArabic 
+                            ? 'انضم لبدء رحلتك الروحية. تتبع ختمتك وذكرك والمزيد.'
+                            : 'Join to start your spiritual journey. Track your Khitma, Dhikr and more.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
-                          color: Colors.white70,
+                          color: themeProvider.secondaryTextColor,
                           height: 1.5,
                         ),
                       ),
@@ -114,26 +131,26 @@ class SignupScreen extends StatelessWidget {
                           enableSuggestions: false,
                           autocorrect: false,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.primaryTextColor,
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Username',
+                            labelText: languageProvider.isArabic ? 'اسم المستخدم' : 'Username',
                             labelStyle: TextStyle(
-                              color: Colors.white60,
+                              color: themeProvider.secondaryTextColor,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
+                                color: themeProvider.borderColor,
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.primaryTextColor,
                                 width: 2,
                               ),
                             ),
@@ -157,26 +174,26 @@ class SignupScreen extends StatelessWidget {
                           enableSuggestions: true,
                           autocorrect: false,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.primaryTextColor,
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: languageProvider.isArabic ? 'البريد الإلكتروني' : 'Email',
                             labelStyle: TextStyle(
-                              color: Colors.white60,
+                              color: themeProvider.secondaryTextColor,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
+                                color: themeProvider.borderColor,
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.primaryTextColor,
                                 width: 2,
                               ),
                             ),
@@ -201,26 +218,26 @@ class SignupScreen extends StatelessWidget {
                           enableSuggestions: true,
                           autocorrect: false,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.primaryTextColor,
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: languageProvider.isArabic ? 'كلمة المرور' : 'Password',
                             labelStyle: TextStyle(
-                              color: Colors.white60,
+                              color: themeProvider.secondaryTextColor,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
+                                color: themeProvider.borderColor,
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.primaryTextColor,
                                 width: 2,
                               ),
                             ),
@@ -241,15 +258,17 @@ class SignupScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF1F1F1F),
-                            foregroundColor: Colors.white,
+                            backgroundColor: themeProvider.isDarkMode 
+                                ? const Color(0xFF1F1F1F) 
+                                : const Color(0xFF2D1B69),
+                            foregroundColor: themeProvider.primaryTextColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                             elevation: 0,
                           ),
                           child: Text(
-                            'Sign Up',
+                            languageProvider.isArabic ? 'إنشاء حساب' : 'Sign Up',
                             style: TextStyle(
                               fontSize: MediaQuery.of(context).size.width * 0.045,
                               fontWeight: FontWeight.w600,
@@ -265,9 +284,9 @@ class SignupScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Already have account? ',
+                            languageProvider.isArabic ? 'لديك حساب بالفعل؟ ' : 'Already have account? ',
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: themeProvider.secondaryTextColor,
                               fontSize: MediaQuery.of(context).size.width * 0.04,
                             ),
                           ),
@@ -279,9 +298,9 @@ class SignupScreen extends StatelessWidget {
                               );
                             },
                             child: Text(
-                              'Login',
+                              languageProvider.isArabic ? 'تسجيل الدخول' : 'Login',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: themeProvider.primaryTextColor,
                                 fontSize: MediaQuery.of(context).size.width * 0.04,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -300,6 +319,11 @@ class SignupScreen extends StatelessWidget {
           ],
         ),
       ),
-    ),);
+      ),
+          ),
+        );
+          
+      },
+    );
   }
 }
