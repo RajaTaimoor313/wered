@@ -5,6 +5,7 @@ import 'language_provider.dart';
 import 'home_screen.dart' show HomeScreen;
 import 'profile_screen.dart';
 import 'bottom_nav_bar.dart';
+import 'dhikr_screen.dart' show DhikrScreen;
 
 class KhitmaScreen extends StatefulWidget {
   const KhitmaScreen({super.key});
@@ -29,7 +30,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
           );
           break;
         case 1:
-          // Navigate to Dhikr screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DhikrScreen()),
+          );
           break;
         case 2:
           // Already on Khitma
@@ -108,18 +112,19 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                     ],
                   ),
                 ),
-                // const SizedBox(height: 10), // Space for header
-                // Rounded box overlapping image
+                // Khitma content box - now sized to content
                 Positioned(
                   left: 0,
                   right: 0,
-                  top: mediaQuery.size.height * 0.32,
+                  top: mediaQuery.size.height * 0.46,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
                     padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
                     decoration: BoxDecoration(
-                      color: themeProvider.secondaryColor.withOpacity(0.98),
-                      borderRadius: BorderRadius.circular(32),
+                      color: themeProvider.secondaryColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(32),
+                        topRight: Radius.circular(32),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.08),

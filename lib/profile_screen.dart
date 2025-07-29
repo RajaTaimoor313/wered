@@ -7,6 +7,7 @@ import 'language_provider.dart';
 import 'app_localizations.dart';
 import 'khitma_screen.dart';
 import 'bottom_nav_bar.dart';
+import 'dhikr_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,7 +34,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
           break;
         case 1:
-          // Navigate to Dhikr screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DhikrScreen()),
+          );
           break;
         case 2:
           // Navigate to Khitma screen
@@ -232,7 +236,6 @@ class _HeaderWithBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-
         return Row(
           children: [
             // Back Button

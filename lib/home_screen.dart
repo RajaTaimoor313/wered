@@ -6,6 +6,7 @@ import 'language_provider.dart';
 import 'app_localizations.dart';
 import 'khitma_screen.dart';
 import 'bottom_nav_bar.dart';
+import 'dhikr_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
           // Already on home
           break;
         case 1:
-          // Navigate to Dhikr screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DhikrScreen()),
+          );
           break;
         case 2:
           // Navigate to Khitma screen
