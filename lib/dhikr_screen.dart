@@ -7,6 +7,8 @@ import 'profile_screen.dart';
 import 'khitma_screen.dart';
 import 'bottom_nav_bar.dart';
 import 'app_localizations.dart';
+import 'start_dhikr_screen.dart';
+import 'dhikr_group_screen.dart';
 
 class DhikrScreen extends StatefulWidget {
   const DhikrScreen({super.key});
@@ -18,23 +20,30 @@ class DhikrScreen extends StatefulWidget {
 class _DhikrScreenState extends State<DhikrScreen> {
   int _selectedIndex = 1;
   String? _selectedDhikr;
+  bool _showDhikrCards = false;
   final TextEditingController _customDhikrController = TextEditingController();
   final TextEditingController _targetController = TextEditingController();
 
   final List<Map<String, String>> _dhikrList = [
     {
       'title': 'Astaghfirullah',
+      'titleArabic': 'أستغفر الله',
       'subtitle': 'I seek forgiveness from Allah.',
+      'subtitleArabic': 'أطلب المغفرة من الله',
       'arabic': 'أَسْتَغْفِرُ اللّٰه',
     },
     {
       'title': 'SubhanAllah',
+      'titleArabic': 'سبحان الله',
       'subtitle': 'Glory to be Allah.',
+      'subtitleArabic': 'تنزيه الله عن كل نقص',
       'arabic': 'سُبْحَانَ اللّٰه',
     },
     {
       'title': 'Salat on Prophet (PBUH)',
+      'titleArabic': 'الصلاة على النبي ﷺ',
       'subtitle': 'Sending Blessings upon the Prophet ﷺ.',
+      'subtitleArabic': 'إرسال البركات على النبي ﷺ',
       'arabic': 'صَلَاةٌ عَلَى النَّبِيِّ ﷺ',
     },
   ];
@@ -96,8 +105,11 @@ class _DhikrScreenState extends State<DhikrScreen> {
             backgroundColor: isLightMode
                 ? Colors.white
                 : themeProvider.backgroundColor,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
             body: Stack(
               children: [
+                // Background images covering entire screen
                 if (isLightMode)
                   Positioned.fill(
                     child: Image.asset(
@@ -116,8 +128,11 @@ class _DhikrScreenState extends State<DhikrScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
+                  Positioned.fill(
+                    child: Container(color: Colors.black.withOpacity(0.2)),
+                  ),
                 ],
-                // Main content
+                // Main content with SafeArea
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -179,141 +194,253 @@ class _DhikrScreenState extends State<DhikrScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          DropdownButtonFormField<String>(
-                            value: _selectedDhikr,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: cardColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(
-                                  color: borderColor,
-                                  width: 1.2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(
-                                  color: borderColor,
-                                  width: 1.2,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                            ),
-                            hint: Text(
-                              isArabic ? 'اختر الذكر' : 'Choose Dhikr',
-                              style: TextStyle(
-                                color: isLightMode
-                                    ? fadedTextColor
-                                    : creamColor.withOpacity(0.7),
-                                fontFamily: amiriFont,
-                              ),
-                            ),
-                            dropdownColor: cardColor,
-                            items: _dhikrList.map((dhikr) {
-                              return DropdownMenuItem<String>(
-                                value: dhikr['title'],
-                                child: Text(
-                                  dhikr['title']!,
-                                  style: TextStyle(
-                                    color: isLightMode ? greenColor : creamColor,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedDhikr = value;
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 16),
-                          ..._dhikrList.map(
-                            (dhikr) => Card(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: BorderSide(color: borderColor, width: 1.2),
-                              ),
-                              child: ListTile(
-                                title: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            dhikr['title']!,
-                                            style: TextStyle(
-                                              color: dhikrCardTextColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            locale: const Locale('en'),
-                                          ),
-                                          Text(
-                                            dhikr['subtitle']!,
-                                            style: TextStyle(
-                                              color: dhikrCardTextColor
-                                                  .withOpacity(0.7),
-                                              fontSize: 12,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            locale: const Locale('en'),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        dhikr['arabic']!,
-                                        style: TextStyle(
-                                          color: dhikrCardTextColor,
-                                          fontSize: 22,
-                                          fontFamily: 'Amiri',
-                                        ),
-                                        textDirection: TextDirection.rtl,
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: false,
-                                        textAlign: TextAlign.right,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _selectedDhikr = dhikr['title'];
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
                           Card(
-                            color: cardColor,
+                            color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                               side: BorderSide(color: borderColor, width: 1.2),
                             ),
                             child: ListTile(
-                              title: Text(
-                                isArabic ? 'أضف ذكر مخصص' : 'Add Custom Dhikr',
-                                style: TextStyle(
-                                  color: isLightMode ? greenColor : creamColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  fontFamily: amiriFont,
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _selectedDhikr != null
+                                              ? (isArabic
+                                                    ? (_dhikrList.firstWhere(
+                                                            (dhikr) =>
+                                                                dhikr['title'] ==
+                                                                _selectedDhikr,
+                                                            orElse: () => {
+                                                              'titleArabic': '',
+                                                            },
+                                                          )['titleArabic'] ??
+                                                          '')
+                                                    : _selectedDhikr!)
+                                              : (isArabic
+                                                    ? 'اختر الذكر'
+                                                    : 'Choose Dhikr'),
+                                          style: TextStyle(
+                                            color: dhikrCardTextColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            fontFamily:
+                                                isArabic &&
+                                                    _selectedDhikr != null
+                                                ? 'Amiri'
+                                                : null,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textDirection:
+                                              isArabic && _selectedDhikr != null
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
+                                        ),
+                                        Text(
+                                          _selectedDhikr != null
+                                              ? (isArabic
+                                                    ? (_dhikrList.firstWhere(
+                                                            (dhikr) =>
+                                                                dhikr['title'] ==
+                                                                _selectedDhikr,
+                                                            orElse: () => {
+                                                              'subtitleArabic':
+                                                                  '',
+                                                            },
+                                                          )['subtitleArabic'] ??
+                                                          '')
+                                                    : (_dhikrList.firstWhere(
+                                                            (dhikr) =>
+                                                                dhikr['title'] ==
+                                                                _selectedDhikr,
+                                                            orElse: () => {
+                                                              'subtitle': '',
+                                                            },
+                                                          )['subtitle'] ??
+                                                          ''))
+                                              : (isArabic
+                                                    ? 'انقر لاختيار الذكر'
+                                                    : 'Tap to select dhikr'),
+                                          style: TextStyle(
+                                            color: dhikrCardTextColor
+                                                .withOpacity(0.7),
+                                            fontSize: 12,
+                                            fontFamily:
+                                                isArabic &&
+                                                    _selectedDhikr != null
+                                                ? 'Amiri'
+                                                : null,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textDirection:
+                                              isArabic && _selectedDhikr != null
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                      _showDhikrCards
+                                          ? Icons.keyboard_arrow_up
+                                          : Icons.keyboard_arrow_down,
+                                      color: dhikrCardTextColor,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  _showDhikrCards = !_showDhikrCards;
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_showDhikrCards)
+                            ..._dhikrList.map(
+                              (dhikr) => Card(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  side: BorderSide(
+                                    color: borderColor,
+                                    width: 1.2,
+                                  ),
+                                ),
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              isArabic
+                                                  ? (dhikr['titleArabic'] ??
+                                                        dhikr['title']!)
+                                                  : dhikr['title']!,
+                                              style: TextStyle(
+                                                color: dhikrCardTextColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                fontFamily: isArabic
+                                                    ? 'Amiri'
+                                                    : null,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: isArabic
+                                                  ? TextDirection.rtl
+                                                  : TextDirection.ltr,
+                                            ),
+                                            Text(
+                                              isArabic
+                                                  ? (dhikr['subtitleArabic'] ??
+                                                        dhikr['subtitle']!)
+                                                  : dhikr['subtitle']!,
+                                              style: TextStyle(
+                                                color: dhikrCardTextColor
+                                                    .withOpacity(0.7),
+                                                fontSize: 12,
+                                                fontFamily: isArabic
+                                                    ? 'Amiri'
+                                                    : null,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: isArabic
+                                                  ? TextDirection.rtl
+                                                  : TextDirection.ltr,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          dhikr['arabic']!,
+                                          style: TextStyle(
+                                            color: dhikrCardTextColor,
+                                            fontSize: 22,
+                                            fontFamily: 'Amiri',
+                                          ),
+                                          textDirection: TextDirection.rtl,
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: false,
+                                          textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedDhikr = dhikr['title'];
+                                      _showDhikrCards = false;
+                                    });
+                                  },
                                 ),
                               ),
-                              trailing: Icon(
-                                Icons.add,
-                                color: isLightMode ? greenColor : creamColor,
+                            ),
+                          Card(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(color: borderColor, width: 1.2),
+                            ),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          isArabic
+                                              ? 'أضف ذكر مخصص'
+                                              : 'Add Custom Dhikr',
+                                          style: TextStyle(
+                                            color: dhikrCardTextColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          locale: const Locale('en'),
+                                        ),
+                                        Text(
+                                          isArabic
+                                              ? 'انقر لإضافة ذكر جديد'
+                                              : 'Tap to add new dhikr',
+                                          style: TextStyle(
+                                            color: dhikrCardTextColor
+                                                .withOpacity(0.7),
+                                            fontSize: 12,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          locale: const Locale('en'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                      Icons.add,
+                                      color: dhikrCardTextColor,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ],
                               ),
                               onTap: () {
                                 showDialog(
@@ -449,7 +576,39 @@ class _DhikrScreenState extends State<DhikrScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_selectedDhikr != null &&
+                                  _targetController.text.isNotEmpty) {
+                                final selectedDhikrData = _dhikrList.firstWhere(
+                                  (dhikr) => dhikr['title'] == _selectedDhikr,
+                                  orElse: () => {
+                                    'title': _selectedDhikr!,
+                                    'titleArabic': _selectedDhikr!,
+                                    'subtitle': '',
+                                    'subtitleArabic': '',
+                                    'arabic': _selectedDhikr!,
+                                  },
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StartDhikrScreen(
+                                      dhikrTitle: selectedDhikrData['title']!,
+                                      dhikrTitleArabic:
+                                          selectedDhikrData['titleArabic'] ??
+                                          selectedDhikrData['title']!,
+                                      dhikrSubtitle:
+                                          selectedDhikrData['subtitle']!,
+                                      dhikrSubtitleArabic:
+                                          selectedDhikrData['subtitleArabic'] ??
+                                          selectedDhikrData['subtitle']!,
+                                      dhikrArabic: selectedDhikrData['arabic']!,
+                                      target: int.parse(_targetController.text),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
                             child: Text(
                               isArabic ? 'ابدأ الذكر' : 'Start Dhikr',
                               style: TextStyle(
@@ -477,7 +636,15 @@ class _DhikrScreenState extends State<DhikrScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DhikrGroupScreen(),
+                                ),
+                              );
+                            },
                             child: Text(
                               isArabic ? 'مجموعات الذكر' : 'Dhikr Groups',
                               style: TextStyle(

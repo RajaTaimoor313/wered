@@ -157,22 +157,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Consumer2<ThemeProvider, LanguageProvider>(
       builder: (context, themeProvider, languageProvider, child) {
+        final isLightMode = !themeProvider.isDarkMode;
+        final greenColor = const Color(0xFF205C3B);
+        final cardBorderColor = isLightMode
+            ? const Color(0xFFB6D1C2)
+            : themeProvider.borderColor;
+        final dividerColor = isLightMode
+            ? const Color(0xFFE6F2E8)
+            : themeProvider.borderColor;
+        final sectionHeaderColor = isLightMode
+            ? greenColor
+            : themeProvider.primaryTextColor;
+        final sectionCardColor = isLightMode
+            ? Colors.white
+            : themeProvider.cardBackgroundColor;
+        final sectionTextColor = isLightMode
+            ? greenColor
+            : themeProvider.primaryTextColor;
+        final sectionIconColor = isLightMode
+            ? greenColor
+            : themeProvider.primaryTextColor;
+        final logoutColor = Colors.red;
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
-            body: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: themeProvider.gradientColors,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  // Background image with optimized loading (always visible)
+            body: Stack(
+              children: [
+                // White background with geometric pattern
+                if (isLightMode)
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/background_elements/3_background.png',
+                      fit: BoxFit.cover,
+                      color: Colors.white.withOpacity(0.7),
+                      colorBlendMode: BlendMode.lighten,
+                    ),
+                  ),
+                if (!isLightMode)
+                  Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: themeProvider.gradientColors,
+                      ),
+                    ),
+                  ),
+                if (!isLightMode)
                   Positioned.fill(
                     child: Image.asset(
                       themeProvider.backgroundImage3,
@@ -181,41 +214,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
-                  // Color overlay based on theme
+                if (!isLightMode)
                   Positioned.fill(
-                    child: Container(
-                      color: themeProvider.backgroundImageOverlay,
-                    ),
+                    child: Container(color: Colors.black.withOpacity(0.2)),
                   ),
-                  // Main content
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 20),
-                            // Header with Back Button and Title
-                            _HeaderWithBackButton(),
-                            const SizedBox(height: 10),
-                            // Profile Header
-                            _ProfileHeader(),
-                            const SizedBox(height: 10),
-                            // Content Sections
-                            _ContentSections(
-                              onLanguageTap: _showLanguageDialog,
-                              onLogoutTap: _handleLogout,
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          // Header with Back Button and Title
+                          _HeaderWithBackButton(
+                            color: sectionHeaderColor,
+                            isLightMode: isLightMode,
+                            greenColor: greenColor,
+                            creamColor: themeProvider.cardBackgroundColor,
+                          ),
+                          const SizedBox(height: 10),
+                          // Profile Header
+                          _ProfileHeader(nameColor: sectionHeaderColor),
+                          const SizedBox(height: 10),
+                          // Content Sections
+                          _ContentSections(
+                            onLanguageTap: _showLanguageDialog,
+                            onLogoutTap: _handleLogout,
+                            sectionHeaderColor: sectionHeaderColor,
+                            sectionCardColor: sectionCardColor,
+                            sectionTextColor: sectionTextColor,
+                            sectionIconColor: sectionIconColor,
+                            cardBorderColor: cardBorderColor,
+                            dividerColor: dividerColor,
+                            logoutColor: logoutColor,
+                            isLightMode: isLightMode,
+                          ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             bottomNavigationBar: BottomNavBar(
               selectedIndex: _selectedIndex,
@@ -230,7 +272,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 // Header with Back Button and Title
 class _HeaderWithBackButton extends StatelessWidget {
-  const _HeaderWithBackButton();
+  final Color color;
+  final bool isLightMode;
+  final Color greenColor;
+  final Color creamColor;
+
+  const _HeaderWithBackButton({
+    required this.color,
+    required this.isLightMode,
+    required this.greenColor,
+    required this.creamColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -238,42 +290,27 @@ class _HeaderWithBackButton extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return Row(
           children: [
-            // Back Button
-            GestureDetector(
-              onTap: () {
+            IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: isLightMode ? greenColor : Colors.white,
+              ),
+              onPressed: () {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
               },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: themeProvider.cardBackgroundColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: themeProvider.primaryTextColor,
-                  size: 20,
-                ),
+            ),
+            const SizedBox(width: 88),
+            Text(
+              AppLocalizations.of(context)!.profile,
+              style: TextStyle(
+                color: color,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            // Centered Title
-            Expanded(
-              child: Center(
-                child: Text(
-                  AppLocalizations.of(context)!.profile,
-                  style: TextStyle(
-                    color: themeProvider.primaryTextColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            // Empty space to balance the back button
-            SizedBox(width: 44, height: 44),
           ],
         );
       },
@@ -283,7 +320,9 @@ class _HeaderWithBackButton extends StatelessWidget {
 
 // Optimized Profile Header
 class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader();
+  final Color nameColor;
+
+  const _ProfileHeader({required this.nameColor});
 
   @override
   Widget build(BuildContext context) {
@@ -321,7 +360,7 @@ class _ProfileHeader extends StatelessWidget {
               Text(
                 languageProvider.isArabic ? 'علي شهوَيز' : 'Ali Shahwaiz',
                 style: TextStyle(
-                  color: themeProvider.primaryTextColor,
+                  color: nameColor,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
@@ -338,10 +377,26 @@ class _ProfileHeader extends StatelessWidget {
 class _ContentSections extends StatelessWidget {
   final Function(BuildContext) onLanguageTap;
   final Function(BuildContext) onLogoutTap;
+  final Color sectionHeaderColor;
+  final Color sectionCardColor;
+  final Color sectionTextColor;
+  final Color sectionIconColor;
+  final Color cardBorderColor;
+  final Color dividerColor;
+  final Color logoutColor;
+  final bool isLightMode;
 
   const _ContentSections({
     required this.onLanguageTap,
     required this.onLogoutTap,
+    required this.sectionHeaderColor,
+    required this.sectionCardColor,
+    required this.sectionTextColor,
+    required this.sectionIconColor,
+    required this.cardBorderColor,
+    required this.dividerColor,
+    required this.logoutColor,
+    required this.isLightMode,
   });
 
   @override
@@ -360,13 +415,21 @@ class _ContentSections extends StatelessWidget {
                   icon: Icons.person,
                   title: appLocalizations.accountDetails,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
                 _SectionItem(
                   icon: Icons.edit,
                   title: appLocalizations.editProfile,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
               ],
+              headerColor: sectionHeaderColor,
+              cardColor: sectionCardColor,
+              borderColor: cardBorderColor,
+              dividerColor: dividerColor,
             ),
             const SizedBox(height: 20),
             // Language & Display Section
@@ -377,6 +440,8 @@ class _ContentSections extends StatelessWidget {
                   icon: Icons.language,
                   title: appLocalizations.chooseLanguage,
                   onTap: () => onLanguageTap(context),
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
                 _SectionItem(
                   icon: Icons.dark_mode,
@@ -396,8 +461,14 @@ class _ContentSections extends StatelessWidget {
                     inactiveThumbColor: themeProvider.switchInactiveThumbColor,
                     inactiveTrackColor: themeProvider.switchInactiveTrackColor,
                   ),
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
               ],
+              headerColor: sectionHeaderColor,
+              cardColor: sectionCardColor,
+              borderColor: cardBorderColor,
+              dividerColor: dividerColor,
             ),
             const SizedBox(height: 20),
             // Reminder Preference Section
@@ -408,13 +479,21 @@ class _ContentSections extends StatelessWidget {
                   icon: Icons.notifications,
                   title: appLocalizations.dhikrReminder,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
                 _SectionItem(
                   icon: Icons.settings,
                   title: appLocalizations.reminderSettings,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
               ],
+              headerColor: sectionHeaderColor,
+              cardColor: sectionCardColor,
+              borderColor: cardBorderColor,
+              dividerColor: dividerColor,
             ),
             const SizedBox(height: 20),
             // Group Management Section
@@ -425,13 +504,21 @@ class _ContentSections extends StatelessWidget {
                   icon: Icons.group,
                   title: appLocalizations.groups,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
                 _SectionItem(
                   icon: Icons.privacy_tip,
                   title: appLocalizations.privacyAndNotification,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
               ],
+              headerColor: sectionHeaderColor,
+              cardColor: sectionCardColor,
+              borderColor: cardBorderColor,
+              dividerColor: dividerColor,
             ),
             const SizedBox(height: 20),
             // Account Control Section
@@ -442,15 +529,21 @@ class _ContentSections extends StatelessWidget {
                   icon: Icons.person_remove,
                   title: appLocalizations.accountDeletionRequest,
                   onTap: () {},
+                  textColor: sectionTextColor,
+                  iconColor: sectionIconColor,
                 ),
                 _SectionItem(
                   icon: Icons.logout,
                   title: appLocalizations.logout,
                   onTap: () => onLogoutTap(context),
-                  textColor: Colors.red,
-                  iconColor: Colors.red,
+                  textColor: logoutColor,
+                  iconColor: logoutColor,
                 ),
               ],
+              headerColor: sectionHeaderColor,
+              cardColor: sectionCardColor,
+              borderColor: cardBorderColor,
+              dividerColor: dividerColor,
             ),
           ],
         );
@@ -463,8 +556,19 @@ class _ContentSections extends StatelessWidget {
 class _SectionCard extends StatelessWidget {
   final String title;
   final List<_SectionItem> items;
+  final Color headerColor;
+  final Color cardColor;
+  final Color borderColor;
+  final Color dividerColor;
 
-  const _SectionCard({required this.title, required this.items});
+  const _SectionCard({
+    required this.title,
+    required this.items,
+    required this.headerColor,
+    required this.cardColor,
+    required this.borderColor,
+    required this.dividerColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -476,7 +580,7 @@ class _SectionCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: themeProvider.primaryTextColor,
+                color: headerColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -484,9 +588,9 @@ class _SectionCard extends StatelessWidget {
             const SizedBox(height: 12),
             Container(
               decoration: BoxDecoration(
-                color: themeProvider.cardBackgroundColor,
+                color: cardColor,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: themeProvider.borderColor),
+                border: Border.all(color: borderColor),
               ),
               child: Column(
                 children: items.asMap().entries.map((entry) {
@@ -499,7 +603,7 @@ class _SectionCard extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           height: 1,
-                          color: themeProvider.borderColor,
+                          color: dividerColor,
                         ),
                     ],
                   );

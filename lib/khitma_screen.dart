@@ -6,6 +6,8 @@ import 'home_screen.dart' show HomeScreen;
 import 'profile_screen.dart';
 import 'bottom_nav_bar.dart';
 import 'dhikr_screen.dart' show DhikrScreen;
+import 'new_khitma_screen.dart';
+import 'daily_wered_screen.dart';
 
 class KhitmaScreen extends StatefulWidget {
   const KhitmaScreen({super.key});
@@ -62,19 +64,40 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
             backgroundColor: themeProvider.backgroundColor,
             body: Stack(
               children: [
-                // Full-page background image
-                Positioned.fill(
-                  child: Image.asset(
-                    'assets/background_elements/5.png',
-                    fit: BoxFit.cover,
-                    cacheWidth: 800,
-                    filterQuality: FilterQuality.medium,
+                // Background - conditional based on theme
+                if (themeProvider.isDarkMode)
+                  // Full-page background image for dark mode
+                  Positioned.fill(
+                    child: Image.asset(
+                      'assets/background_elements/5.png',
+                      fit: BoxFit.cover,
+                      cacheWidth: 800,
+                      filterQuality: FilterQuality.medium,
+                    ),
                   ),
-                ),
-                // Color overlay (optional, for theme)
-                Positioned.fill(
-                  child: Container(color: themeProvider.backgroundImageOverlay),
-                ),
+                if (themeProvider.isDarkMode)
+                  // Color overlay for dark mode
+                  Positioned.fill(
+                    child: Container(
+                      color: themeProvider.backgroundImageOverlay,
+                    ),
+                  ),
+                if (!themeProvider.isDarkMode)
+                  // Light theme background with Quran image at top
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: mediaQuery.size.height * 0.5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/background_elements/5.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 // Header (back button and title) over image
                 Positioned(
                   top: mediaQuery.padding.top + 8,
@@ -93,7 +116,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                         },
                         icon: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
+                          color: themeProvider.isDarkMode
+                              ? Colors.white
+                              : Colors.black,
                           size: 22,
                         ),
                       ),
@@ -101,8 +126,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                         child: Text(
                           languageProvider.isArabic ? 'الختمة' : 'Khitma',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: themeProvider.isDarkMode
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -116,20 +143,30 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                 Positioned(
                   left: 0,
                   right: 0,
-                  top: mediaQuery.size.height * 0.46,
+                  top: themeProvider.isDarkMode
+                      ? mediaQuery.size.height * 0.46
+                      : mediaQuery.size.height * 0.4,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
                     decoration: BoxDecoration(
-                      color: themeProvider.secondaryColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(32),
-                        topRight: Radius.circular(32),
+                      color: themeProvider.isDarkMode
+                          ? themeProvider.secondaryColor
+                          : Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          themeProvider.isDarkMode ? 32 : 24,
+                        ),
+                        topRight: Radius.circular(
+                          themeProvider.isDarkMode ? 32 : 24,
+                        ),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withOpacity(
+                            themeProvider.isDarkMode ? 0.08 : 0.1,
+                          ),
                           blurRadius: 16,
-                          offset: const Offset(0, 4),
+                          offset: const Offset(0, -2),
                         ),
                       ],
                     ),
@@ -165,10 +202,22 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                               width: double.infinity,
                               height: 48,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NewKhitmaScreen(),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF5E6D3),
-                                  foregroundColor: const Color(0xFF2D1B3D),
+                                  backgroundColor: themeProvider.isDarkMode
+                                      ? const Color(0xFFF5E6D3)
+                                      : const Color(0xFF2D5A27),
+                                  foregroundColor: themeProvider.isDarkMode
+                                      ? const Color(0xFF2D1B3D)
+                                      : Colors.white,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -191,10 +240,22 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                               width: double.infinity,
                               height: 48,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DailyWeredScreen(),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: themeProvider.secondaryColor,
+                                  backgroundColor: themeProvider.isDarkMode
+                                      ? Colors.white
+                                      : const Color(0xFF7FB069),
+                                  foregroundColor: themeProvider.isDarkMode
+                                      ? themeProvider.secondaryColor
+                                      : Colors.white,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -207,7 +268,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
-                                    color: themeProvider.secondaryColor,
+                                    color: themeProvider.isDarkMode
+                                        ? themeProvider.secondaryColor
+                                        : Colors.white,
                                   ),
                                 ),
                               ),
@@ -223,8 +286,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                   foregroundColor:
                                       themeProvider.primaryTextColor,
                                   side: BorderSide(
-                                    color: themeProvider.primaryTextColor
-                                        .withOpacity(0.54),
+                                    color: themeProvider.isDarkMode
+                                        ? themeProvider.primaryTextColor
+                                              .withOpacity(0.54)
+                                        : const Color(0xFF2D5A27),
                                     width: 1.5,
                                   ),
                                   shape: RoundedRectangleBorder(
@@ -238,7 +303,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
-                                    color: themeProvider.primaryTextColor,
+                                    color: themeProvider.isDarkMode
+                                        ? themeProvider.primaryTextColor
+                                        : const Color(0xFF2D5A27),
                                   ),
                                 ),
                               ),

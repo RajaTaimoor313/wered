@@ -85,11 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   // Color overlay based on theme
-                  Positioned.fill(
-                    child: Container(
-                      color: themeProvider.backgroundImageOverlay,
+                  if (!themeProvider.isDarkMode)
+                    Positioned.fill(
+                      child: Container(color: Colors.white.withOpacity(0.7)),
                     ),
-                  ),
+                  if (themeProvider.isDarkMode)
+                    Positioned.fill(
+                      child: Container(color: Colors.black.withOpacity(0.2)),
+                    ),
                   // Main content
                   SafeArea(
                     child: Padding(
