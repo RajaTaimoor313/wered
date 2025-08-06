@@ -157,18 +157,17 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                 children: [
                   // Background image
                   Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800,
-                      filterQuality: FilterQuality.medium,
+                    child: Opacity(
+                      opacity: themeProvider.isDarkMode ? 0.5 : 1.0,
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800,
+                        filterQuality: FilterQuality.medium,
+                      ),
                     ),
                   ),
-                  // Color overlay
-                  if (!themeProvider.isDarkMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
-                    ),
+                  // Color overlay for dark mode only
                   if (themeProvider.isDarkMode)
                     Positioned.fill(
                       child: Container(color: Colors.black.withOpacity(0.2)),

@@ -35,11 +35,14 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     // Background image
                     Positioned.fill(
-                      child: Image.asset(
-                        themeProvider.backgroundImage3,
-                        fit: BoxFit.cover,
-                        cacheWidth: 800,
-                        filterQuality: FilterQuality.medium,
+                      child: Opacity(
+                        opacity: themeProvider.isDarkMode ? 0.5 : 1.0,
+                        child: Image.asset(
+                          themeProvider.backgroundImage3,
+                          fit: BoxFit.cover,
+                          cacheWidth: 800,
+                          filterQuality: FilterQuality.medium,
+                        ),
                       ),
                     ),
                     // Color overlay based on theme

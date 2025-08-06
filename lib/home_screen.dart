@@ -71,19 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF251629),
-                          Color(0xFF4C3B6E),
-                        ],
+                        colors: [Color(0xFF251629), Color(0xFF4C3B6E)],
                       )
                     : null,
-                color: themeProvider.isDarkMode ? null : themeProvider.screenBackgroundColor,
+                color: themeProvider.isDarkMode
+                    ? null
+                    : themeProvider.screenBackgroundColor,
               ),
               child: Stack(
                 children: [
-                  // Background image with optimized loading (dark mode only)
-                  if (themeProvider.isDarkMode)
-                    Positioned.fill(
+                  // Background image with optimized loading (both themes)
+                  Positioned.fill(
+                    child: Opacity(
+                      opacity: themeProvider.isDarkMode ? 0.5 : 1.0,
                       child: Image.asset(
                         'assets/background_elements/3_background.png',
                         fit: BoxFit.cover,
@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             .medium, // Balance quality and performance
                       ),
                     ),
+                  ),
                   // Color overlay for dark mode only
                   if (themeProvider.isDarkMode)
                     Positioned.fill(
@@ -280,11 +281,14 @@ class _ProgressCard extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: themeProvider.cardBackgroundColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: themeProvider.homeBoxBorderColor, width: 2),
+            border: Border.all(
+              color: themeProvider.homeBoxBorderColor,
+              width: 1,
+            ),
           ),
           child: Column(
             children: [
@@ -296,7 +300,7 @@ class _ProgressCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 16),
+              // const SizedBox(height: 8),
               SizedBox(
                 height: 80,
                 width: 80,
@@ -315,14 +319,14 @@ class _ProgressCard extends StatelessWidget {
                       "${(progress * 100).toInt()}%",
                       style: TextStyle(
                         color: themeProvider.homeBoxTextColor,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              // const SizedBox(height: 16),
               Text(
                 subtitle,
                 style: TextStyle(
@@ -367,7 +371,10 @@ class _StreakSection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: themeProvider.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: themeProvider.homeBoxBorderColor, width: 2),
+                border: Border.all(
+                  color: themeProvider.homeBoxBorderColor,
+                  width: 2,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -402,7 +409,7 @@ class _StreakSection extends StatelessWidget {
                             appLocalizations.days,
                             style: TextStyle(
                               color: themeProvider.homeBoxTextColor,
-                              fontSize: 24,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -419,8 +426,7 @@ class _StreakSection extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
+        ),],
         );
       },
     );
@@ -451,7 +457,6 @@ class _MotivationalVerseSection extends StatelessWidget {
             const SizedBox(height: 16),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: themeProvider.isDarkMode
                     ? Colors.white
@@ -471,40 +476,36 @@ class _MotivationalVerseSection extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Column(
+              child: Stack(
+                children: [
+                  // Background images
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Image.asset(
+                      'assets/background_elements/9.png',
+                      width: 40,
+                      height: 40,
+                      opacity: const AlwaysStoppedAnimation(0.6),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 8,
+                    right: 8,
+                    child: Image.asset(
+                      'assets/background_elements/8.png',
+                      width: 40,
+                      height: 40,
+                      opacity: const AlwaysStoppedAnimation(0.6),
+                    ),
+                  ),
+                  // Main content
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Decorative corner elements
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode
-                              ? const Color(0xFF251629)
-                              : const Color(0xFF4CAF50),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(4),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode
-                              ? const Color(0xFF251629)
-                              : const Color(0xFF4CAF50),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(4),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
+
                   Text(
                     appLocalizations.verseText,
                     textAlign: TextAlign.center,
@@ -576,7 +577,9 @@ class _MotivationalVerseSection extends StatelessWidget {
               ),
             ),
           ],
-        );
+        ),
+        )],
+    );
       },
     );
   }

@@ -64,7 +64,7 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
       'arabic': 'الصافات',
       'subtitle': 'Those who set the Ranks',
     },
-    {'name': 'Sad', 'arabic': 'ص', 'subtitle': 'The Letter Sad'},
+    {'name': 'Sad', 'arabic': 'ص', 'subtitle': 'The Letter "Saad"'},
     {'name': 'Az-Zumar', 'arabic': 'الزمر', 'subtitle': 'The Troops'},
     {'name': 'Ghafir', 'arabic': 'غافر', 'subtitle': 'The Forgiver'},
     {'name': 'Fussilat', 'arabic': 'فصلت', 'subtitle': 'Explained in Detail'},
@@ -84,7 +84,7 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
     {'name': 'Muhammad', 'arabic': 'محمد', 'subtitle': 'Muhammad'},
     {'name': 'Al-Fath', 'arabic': 'الفتح', 'subtitle': 'The Victory'},
     {'name': 'Al-Hujurat', 'arabic': 'الحجرات', 'subtitle': 'The Rooms'},
-    {'name': 'Qaf', 'arabic': 'ق', 'subtitle': 'The Letter Qaf'},
+    {'name': 'Qaf', 'arabic': 'ق', 'subtitle': 'The Letter "Qaf"'},
     {
       'name': 'Adh-Dhariyat',
       'arabic': 'الذاريات',
@@ -108,7 +108,11 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
       'subtitle': 'She that is to be examined',
     },
     {'name': 'As-Saff', 'arabic': 'الصف', 'subtitle': 'The Ranks'},
-    {'name': 'Al-Jumuah', 'arabic': 'الجمعة', 'subtitle': 'The Congregation'},
+    {
+      'name': 'Al-Jumuah',
+      'arabic': 'الجمعة',
+      'subtitle': 'The Congregation, Friday',
+    },
     {
       'name': 'Al-Munafiqun',
       'arabic': 'المنافقون',
@@ -183,8 +187,8 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
     {'name': 'Ash-Sharh', 'arabic': 'الشرح', 'subtitle': 'The Relief'},
     {'name': 'At-Tin', 'arabic': 'التين', 'subtitle': 'The Fig'},
     {'name': 'Al-Alaq', 'arabic': 'العلق', 'subtitle': 'The Clot'},
-    {'name': 'Al-Qadr', 'arabic': 'القدر', 'subtitle': 'The Power'},
-    {'name': 'Al-Bayyinah', 'arabic': 'البينة', 'subtitle': 'The Clear Proof'},
+    {'name': 'Al-Qadr', 'arabic': 'القدر', 'subtitle': 'The Power, Fate'},
+    {'name': 'Al-Bayyinah', 'arabic': 'البينة', 'subtitle': 'The Evidence'},
     {'name': 'Az-Zalzalah', 'arabic': 'الزلزلة', 'subtitle': 'The Earthquake'},
     {'name': 'Al-Adiyat', 'arabic': 'العاديات', 'subtitle': 'The Courser'},
     {'name': 'Al-Qariah', 'arabic': 'القارعة', 'subtitle': 'The Calamity'},
@@ -193,7 +197,11 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
       'arabic': 'التكاثر',
       'subtitle': 'The Rivalry in world increase',
     },
-    {'name': 'Al-Asr', 'arabic': 'العصر', 'subtitle': 'The Declining Day'},
+    {
+      'name': 'Al-Asr',
+      'arabic': 'العصر',
+      'subtitle': 'The Declining Day, Epoch',
+    },
     {'name': 'Al-Humazah', 'arabic': 'الهمزة', 'subtitle': 'The Traducer'},
     {'name': 'Al-Fil', 'arabic': 'الفيل', 'subtitle': 'The Elephant'},
     {'name': 'Quraysh', 'arabic': 'قريش', 'subtitle': 'Quraysh'},
@@ -211,7 +219,7 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
     {'name': 'An-Nasr', 'arabic': 'النصر', 'subtitle': 'The Divine Support'},
     {'name': 'Al-Masad', 'arabic': 'المسد', 'subtitle': 'The Palm Fibre'},
     {'name': 'Al-Ikhlas', 'arabic': 'الإخلاص', 'subtitle': 'The Sincerity'},
-    {'name': 'Al-Falaq', 'arabic': 'الفلق', 'subtitle': 'The Daybreak'},
+    {'name': 'Al-Falaq', 'arabic': 'الفلق', 'subtitle': 'The Dawn'},
     {'name': 'An-Nas', 'arabic': 'الناس', 'subtitle': 'Mankind'},
   ];
 
@@ -224,512 +232,461 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
           child: Scaffold(
             extendBodyBehindAppBar: true,
             extendBody: true,
-            body: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: themeProvider.gradientColors,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  // Background image with optimized loading (always visible)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800,
-                      filterQuality: FilterQuality.medium,
-                    ),
-                  ),
-                  // Color overlay based on theme
-                  if (!themeProvider.isDarkMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
-                    ),
-                  if (themeProvider.isDarkMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.black.withOpacity(0.2)),
-                    ),
-                  // Main content
-                  SingleChildScrollView(
-                    child: SafeArea(
-                      child: Column(
-                        children: [
-                          // Header
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: themeProvider.isDarkMode
-                                        ? const Color(0xFFF7F3E8)
-                                        : const Color(0xFF205C3B),
-                                    size: 20,
-                                  ),
+            backgroundColor: Colors.white,
+            body: themeProvider.isDarkMode
+                ? Stack(
+                    children: [
+                      // Background image for dark mode only
+                      Positioned.fill(
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.asset(
+                            'assets/background_elements/3_background.png',
+                            fit: BoxFit.cover,
+                            cacheWidth: 800,
+                            filterQuality: FilterQuality.medium,
+                          ),
+                        ),
+                      ),
+                      // Color overlay for dark mode
+                      Positioned.fill(
+                        child: Container(color: Colors.black.withOpacity(0.2)),
+                      ),
+                      // Main content
+                      SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            children: [
+                              // Header
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: const Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Color(0xFFF7F3E8),
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            languageProvider.isArabic
+                                                ? 'الورد اليومي'
+                                                : 'Daily Wered',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Color(0xFFF7F3E8),
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            languageProvider.isArabic
+                                                ? 'اشغل قلبك بذكر الله. اختر سورة لتبدأ رحلتك الروحية والسلام.'
+                                                : 'Engage your heart in the remembrance of Allah. Select a Surah to begin your spiritual journey and peace.',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: const Color(
+                                                0xFFF7F3E8,
+                                              ).withOpacity(0.8),
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 48),
+                                  ],
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(
+                              ),
+                              // Content
+                              _buildContent(themeProvider, languageProvider),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/background_elements/3_background.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            children: [
+                              // Header
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: const Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Color(0xFF205C3B),
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
                                         languageProvider.isArabic
                                             ? 'الورد اليومي'
                                             : 'Daily Wered',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: themeProvider.isDarkMode
-                                              ? const Color(0xFFF7F3E8)
-                                              : const Color(0xFF205C3B),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        languageProvider.isArabic
-                                            ? 'اشغل قلبك بذكر الله. اختر سورة لتبدأ رحلتك الروحية والسلام.'
-                                            : 'Engage your heart in the remembrance of Allah. Select a Surah to begin your spiritual journey and peace.',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: themeProvider.isDarkMode
-                                              ? const Color(
-                                                  0xFFF7F3E8,
-                                                ).withOpacity(0.8)
-                                              : const Color(
-                                                  0xFF205C3B,
-                                                ).withOpacity(0.8),
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 40,
-                                ), // Balance the back button
-                              ],
-                            ),
-                          ),
-                          // Content
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 20),
-                                // Number of pages input
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: themeProvider.isDarkMode
-                                        ? const Color(
-                                            0xFFB9A9D0,
-                                          ).withOpacity(0.18)
-                                        : const Color(0xFFE6F2E8),
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: themeProvider.isDarkMode
-                                          ? const Color(
-                                              0xFFB9A9D0,
-                                            ).withOpacity(0.35)
-                                          : const Color(0xFFB6D1C2),
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: TextField(
-                                    controller: _pagesController,
-                                    style: TextStyle(
-                                      color: themeProvider.isDarkMode
-                                          ? const Color(0xFFF7F3E8)
-                                          : const Color(0xFF205C3B),
-                                      fontSize: 16,
-                                    ),
-                                    decoration: InputDecoration(
-                                      hintText: languageProvider.isArabic
-                                          ? 'عدد الصفحات'
-                                          : 'No. of pages',
-                                      hintStyle: TextStyle(
-                                        color: themeProvider.isDarkMode
-                                            ? const Color(
-                                                0xFFF7F3E8,
-                                              ).withOpacity(0.7)
-                                            : const Color(
-                                                0xFF205C3B,
-                                              ).withOpacity(0.7),
-                                        fontSize: 16,
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                // Choose surah input
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (_showAllSurahs &&
-                                          _selectedSurahs.isNotEmpty) {
-                                        // If showing all surahs and some are selected, hide all except selected
-                                        _showAllSurahs = false;
-                                        _hasSelectedSurahs = true;
-                                      } else {
-                                        // Toggle between showing all surahs and hiding them
-                                        _showAllSurahs = !_showAllSurahs;
-                                        _hasSelectedSurahs = false;
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 12,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: themeProvider.isDarkMode
-                                          ? const Color(
-                                              0xFFB9A9D0,
-                                            ).withOpacity(0.18)
-                                          : const Color(0xFFE6F2E8),
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: themeProvider.isDarkMode
-                                            ? const Color(
-                                                0xFFB9A9D0,
-                                              ).withOpacity(0.35)
-                                            : const Color(0xFFB6D1C2),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          _selectedSurahs.isEmpty
-                                              ? (languageProvider.isArabic
-                                                    ? 'اختر السورة'
-                                                    : 'Choose surah')
-                                              : languageProvider.isArabic
-                                              ? '${_selectedSurahs.length} سورة مختارة'
-                                              : '${_selectedSurahs.length} surah(s) selected',
-                                          style: TextStyle(
-                                            color: themeProvider.isDarkMode
-                                                ? const Color(
-                                                    0xFFF7F3E8,
-                                                  ).withOpacity(0.7)
-                                                : const Color(
-                                                    0xFF205C3B,
-                                                  ).withOpacity(0.7),
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Icon(
-                                          _showAllSurahs
-                                              ? Icons.keyboard_arrow_up
-                                              : Icons.keyboard_arrow_down,
-                                          color: themeProvider.isDarkMode
-                                              ? const Color(
-                                                  0xFFF7F3E8,
-                                                ).withOpacity(0.7)
-                                              : const Color(
-                                                  0xFF205C3B,
-                                                ).withOpacity(0.7),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                // Surah list
-                                if (_showAllSurahs || _hasSelectedSurahs)
-                                  Builder(
-                                    builder: (context) {
-                                      // Filter surahs based on current state
-                                      List<Map<String, String>> filteredSurahs;
-                                      if (_showAllSurahs) {
-                                        // Show all surahs
-                                        filteredSurahs = _surahs;
-                                      } else if (_hasSelectedSurahs) {
-                                        // Show only selected surahs
-                                        filteredSurahs = _surahs
-                                            .where(
-                                              (surah) => _selectedSurahs
-                                                  .contains(surah['name']),
-                                            )
-                                            .toList();
-                                      } else {
-                                        filteredSurahs = [];
-                                      }
-
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: filteredSurahs.length,
-                                        itemBuilder: (context, index) {
-                                          final surah = filteredSurahs[index];
-                                          final isSelected = _selectedSurahs
-                                              .contains(surah['name']);
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                              bottom: 7,
-                                            ),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  if (_selectedSurahs.contains(
-                                                    surah['name'],
-                                                  )) {
-                                                    _selectedSurahs.remove(
-                                                      surah['name'],
-                                                    );
-                                                  } else {
-                                                    _selectedSurahs.add(
-                                                      surah['name']!,
-                                                    );
-                                                  }
-                                                });
-                                              },
-                                              child: Container(
-                                                padding: const EdgeInsets.all(
-                                                  10,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  border: Border.all(
-                                                    color: isSelected
-                                                        ? Colors.grey[400]!
-                                                        : Colors.grey[300]!,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            languageProvider
-                                                                    .isArabic
-                                                                ? surah['arabic']!
-                                                                : surah['name']!,
-                                                            style:
-                                                                const TextStyle(
-                                                                  color: Color(
-                                                                    0xFF4A148C,
-                                                                  ),
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 4,
-                                                          ),
-                                                          if (!languageProvider
-                                                              .isArabic)
-                                                            Text(
-                                                              surah['subtitle']!,
-                                                              style:
-                                                                  const TextStyle(
-                                                                    color: Color(
-                                                                      0xFF4A148C,
-                                                                    ),
-                                                                    fontSize:
-                                                                        14,
-                                                                  ),
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      languageProvider.isArabic
-                                                          ? surah['name']!
-                                                          : surah['arabic']!,
-                                                      style: const TextStyle(
-                                                        color: Color(
-                                                          0xFF4A148C,
-                                                        ),
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 8),
-                                                    if (isSelected)
-                                                      const Icon(
-                                                        Icons.check_circle,
-                                                        color: Color(
-                                                          0xFF4A148C,
-                                                        ),
-                                                        size: 24,
-                                                      ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                // Privacy policy checkbox
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 16,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                        value: _agreedToTerms,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _agreedToTerms = value ?? false;
-                                          });
-                                        },
-                                        activeColor: themeProvider.isDarkMode
-                                            ? const Color(0xFFF7F3E8)
-                                            : const Color(0xFF205C3B),
-                                        checkColor: themeProvider.isDarkMode
-                                            ? const Color(0xFF2D1B69)
-                                            : const Color(0xFFF7F3E8),
-                                        side: BorderSide(
-                                          color: themeProvider.isDarkMode
-                                              ? const Color(
-                                                  0xFFF7F3E8,
-                                                ).withOpacity(0.5)
-                                              : const Color(
-                                                  0xFF205C3B,
-                                                ).withOpacity(0.5),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          languageProvider.isArabic
-                                              ? 'أوافق على سياسة الخصوصية والشروط والأحكام'
-                                              : 'Agree to our Privacy Policy & Terms and Conditions',
-                                          style: TextStyle(
-                                            color: themeProvider.isDarkMode
-                                                ? const Color(
-                                                    0xFFF7F3E8,
-                                                  ).withOpacity(0.8)
-                                                : const Color(
-                                                    0xFF205C3B,
-                                                  ).withOpacity(0.8),
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Start Wered button
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 20),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    height: 48,
-                                    child: ElevatedButton(
-                                      onPressed:
-                                          _agreedToTerms &&
-                                              _selectedSurahs.isNotEmpty
-                                          ? () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WeredReadingScreen(
-                                                        selectedSurahs:
-                                                            _selectedSurahs
-                                                                .toList(),
-                                                        pages:
-                                                            _pagesController
-                                                                .text
-                                                                .isEmpty
-                                                            ? '1'
-                                                            : _pagesController
-                                                                  .text,
-                                                      ),
-                                                ),
-                                              );
-                                            }
-                                          : null,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            themeProvider.isDarkMode
-                                            ? const Color(0xFFF7F3E8)
-                                            : const Color(0xFF205C3B),
-                                        disabledBackgroundColor:
-                                            themeProvider.isDarkMode
-                                            ? const Color(
-                                                0xFFF7F3E8,
-                                              ).withOpacity(0.5)
-                                            : const Color(
-                                                0xFF205C3B,
-                                              ).withOpacity(0.5),
-                                        foregroundColor:
-                                            themeProvider.isDarkMode
-                                            ? const Color(0xFF2D1B69)
-                                            : const Color(0xFFF7F3E8),
-                                        disabledForegroundColor:
-                                            themeProvider.isDarkMode
-                                            ? const Color(0xFF2D1B69)
-                                            : const Color(0xFFF7F3E8),
-                                        minimumSize: const Size(
-                                          double.infinity,
-                                          56,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
-                                        ),
-                                        elevation: 0,
-                                      ),
-                                      child: Text(
-                                        languageProvider.isArabic
-                                            ? 'ابدأ الورد'
-                                            : 'Start Wered',
                                         style: const TextStyle(
+                                          color: Color(0xFF205C3B),
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(width: 48),
+                                  ],
+                                ),
+                              ),
+                              // Subtitle
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                child: Text(
+                                  languageProvider.isArabic
+                                      ? 'اشغل قلبك بذكر الله. اختر سورة لتبدأ رحلتك الروحية والسلام.'
+                                      : 'Engage your heart in the remembrance of Allah. Select a Surah to begin your spiritual journey and peace.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: const Color(
+                                      0xFF205C3B,
+                                    ).withOpacity(0.8),
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 20),
+                              // Content
+                              _buildContent(themeProvider, languageProvider),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
+          ),
+        ));
+      },
+    );
+  }
+
+  Widget _buildContent(
+    ThemeProvider themeProvider,
+    LanguageProvider languageProvider,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          // Number of pages input
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: themeProvider.isDarkMode
+                  ? const Color(0xFFB9A9D0).withOpacity(0.18)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: themeProvider.isDarkMode
+                    ? const Color(0xFFB9A9D0).withOpacity(0.35)
+                    : const Color(0xFFB6D1C2),
+                width: 1,
+              ),
+            ),
+            child: TextField(
+              controller: _pagesController,
+              style: TextStyle(
+                color: themeProvider.isDarkMode
+                    ? const Color(0xFFF7F3E8)
+                    : const Color(0xFF205C3B),
+                fontSize: 16,
+              ),
+              decoration: InputDecoration(
+                hintText: languageProvider.isArabic
+                    ? 'عدد الصفحات'
+                    : 'No. of pages',
+                hintStyle: TextStyle(
+                  color: themeProvider.isDarkMode
+                      ? const Color(0xFFF7F3E8).withOpacity(0.7)
+                      : const Color(0xFF205C3B).withOpacity(0.7),
+                  fontSize: 16,
+                ),
+                border: InputBorder.none,
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Choose surah input
+          InkWell(
+            onTap: () {
+              setState(() {
+                if (_showAllSurahs && _selectedSurahs.isNotEmpty) {
+                  _showAllSurahs = false;
+                  _hasSelectedSurahs = true;
+                } else {
+                  _showAllSurahs = !_showAllSurahs;
+                  _hasSelectedSurahs = false;
+                }
+              });
+            },
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: themeProvider.isDarkMode
+                    ? const Color(0xFFB9A9D0).withOpacity(0.18)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: themeProvider.isDarkMode
+                      ? const Color(0xFFB9A9D0).withOpacity(0.35)
+                      : const Color(0xFFB6D1C2),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    _selectedSurahs.isEmpty
+                        ? (languageProvider.isArabic
+                              ? 'اختر السورة'
+                              : 'Choose surah')
+                        : languageProvider.isArabic
+                        ? '${_selectedSurahs.length} سورة مختارة'
+                        : '${_selectedSurahs.length} surah(s) selected',
+                    style: TextStyle(
+                      color: themeProvider.isDarkMode
+                          ? const Color(0xFFF7F3E8).withOpacity(0.7)
+                          : const Color(0xFF205C3B).withOpacity(0.7),
+                      fontSize: 16,
                     ),
+                  ),
+                  Icon(
+                    _showAllSurahs
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                    color: themeProvider.isDarkMode
+                        ? const Color(0xFFF7F3E8).withOpacity(0.7)
+                        : const Color(0xFF205C3B).withOpacity(0.7),
                   ),
                 ],
               ),
             ),
           ),
-        );
-      },
+          const SizedBox(height: 16),
+          // Surah list
+          if (_showAllSurahs || _hasSelectedSurahs)
+            Builder(
+              builder: (context) {
+                List<Map<String, String>> filteredSurahs;
+                if (_showAllSurahs) {
+                  filteredSurahs = _surahs;
+                } else if (_hasSelectedSurahs) {
+                  filteredSurahs = _surahs
+                      .where((surah) => _selectedSurahs.contains(surah['name']))
+                      .toList();
+                } else {
+                  filteredSurahs = [];
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: filteredSurahs.length,
+                  itemBuilder: (context, index) {
+                    final surah = filteredSurahs[index];
+                    final isSelected = _selectedSurahs.contains(surah['name']);
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 7),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (_selectedSurahs.contains(surah['name'])) {
+                              _selectedSurahs.remove(surah['name']);
+                            } else {
+                              _selectedSurahs.add(surah['name']!);
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: isSelected
+                                  ? Colors.grey[400]!
+                                  : Colors.grey[300]!,
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      languageProvider.isArabic
+                                          ? surah['arabic']!
+                                          : surah['name']!,
+                                      style: const TextStyle(
+                                        color: Color(0xFF4A148C),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    if (!languageProvider.isArabic)
+                                      Text(
+                                        surah['subtitle']!,
+                                        style: const TextStyle(
+                                          color: Color(0xFF4A148C),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                languageProvider.isArabic
+                                    ? surah['name']!
+                                    : surah['arabic']!,
+                                style: const TextStyle(
+                                  color: Color(0xFF4A148C),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              if (isSelected)
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: Color(0xFF4A148C),
+                                  size: 24,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          // Privacy policy checkbox
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: _agreedToTerms,
+                  onChanged: (value) {
+                    setState(() {
+                      _agreedToTerms = value ?? false;
+                    });
+                  },
+                  activeColor: themeProvider.isDarkMode
+                      ? const Color(0xFFF7F3E8)
+                      : const Color(0xFF205C3B),
+                  checkColor: themeProvider.isDarkMode
+                      ? const Color(0xFF2D1B69)
+                      : const Color(0xFFF7F3E8),
+                  side: BorderSide(
+                    color: themeProvider.isDarkMode
+                        ? const Color(0xFFF7F3E8).withOpacity(0.5)
+                        : const Color(0xFF205C3B).withOpacity(0.5),
+                    width: 2,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    languageProvider.isArabic
+                        ? 'أوافق على سياسة الخصوصية والشروط والأحكام'
+                        : 'Agree to our Privacy Policy & Terms and Conditions',
+                    style: TextStyle(
+                      color: themeProvider.isDarkMode
+                          ? const Color(0xFFF7F3E8).withOpacity(0.8)
+                          : const Color(0xFF205C3B).withOpacity(0.8),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Start Wered button
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: _agreedToTerms && _selectedSurahs.isNotEmpty
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WeredReadingScreen(
+                              selectedSurahs: _selectedSurahs.toList(),
+                              pages: _pagesController.text.isEmpty
+                                  ? '1'
+                                  : _pagesController.text,
+                            ),
+                          ),
+                        );
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: themeProvider.isDarkMode
+                      ? const Color(0xFFF7F3E8)
+                      : const Color(0xFF205C3B),
+                  disabledBackgroundColor: themeProvider.isDarkMode
+                      ? const Color(0xFFF7F3E8).withOpacity(0.5)
+                      : const Color(0xFF205C3B).withOpacity(0.5),
+                  foregroundColor: themeProvider.isDarkMode
+                      ? const Color(0xFF2D1B69)
+                      : const Color(0xFFF7F3E8),
+                  disabledForegroundColor: themeProvider.isDarkMode
+                      ? const Color(0xFF2D1B69)
+                      : const Color(0xFFF7F3E8),
+                  minimumSize: const Size(double.infinity, 56),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text(
+                  languageProvider.isArabic ? 'ابدأ الورد' : 'Start Wered',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

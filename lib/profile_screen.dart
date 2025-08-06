@@ -189,8 +189,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: double.infinity,
                   color: themeProvider.screenBackgroundColor,
                 ),
-                if (!isLightMode)
-                  Positioned.fill(
+                // Background image for both themes
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: !isLightMode ? 0.5 : 1.0,
                     child: Image.asset(
                       themeProvider.backgroundImage3,
                       fit: BoxFit.cover,
@@ -198,6 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
+                ),
                 if (!isLightMode)
                   Positioned.fill(
                     child: Container(color: Colors.black.withOpacity(0.2)),

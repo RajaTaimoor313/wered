@@ -107,9 +107,11 @@ class _DhikrScreenState extends State<DhikrScreen> {
             extendBody: true,
             body: Stack(
               children: [
-                // Background images for dark mode only
-                if (!isLightMode) ...[
-                  Positioned.fill(
+                // Background images for both themes
+                // Background image
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: !isLightMode ? 0.5 : 1.0,
                     child: Image.asset(
                       themeProvider.backgroundImage3,
                       fit: BoxFit.cover,
@@ -117,10 +119,12 @@ class _DhikrScreenState extends State<DhikrScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
+                ),
+                // Color overlay for dark mode only
+                if (!isLightMode)
                   Positioned.fill(
                     child: Container(color: Colors.black.withOpacity(0.2)),
                   ),
-                ],
                 // Main content with SafeArea
                 SafeArea(
                   child: Padding(

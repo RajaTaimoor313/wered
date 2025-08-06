@@ -37,36 +37,21 @@ class _NewKhitmaScreenState extends State<NewKhitmaScreen> {
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
-            body: Container(
+            backgroundColor: Colors.white,
+            body: SizedBox(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: themeProvider.gradientColors,
-                ),
-              ),
               child: Stack(
                 children: [
-                  // Background image with optimized loading (always visible)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800, // Optimize memory usage
-                      filterQuality: FilterQuality
-                          .medium, // Balance quality and performance
-                    ),
-                  ),
-                  // Color overlay based on theme
+                  // Background image for light mode only
                   if (!themeProvider.isDarkMode)
                     Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
-                    ),
-                  if (themeProvider.isDarkMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.black.withOpacity(0.2)),
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800,
+                        filterQuality: FilterQuality.medium,
+                      ),
                     ),
                   // Main content
                   SafeArea(

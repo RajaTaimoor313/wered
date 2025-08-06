@@ -55,7 +55,23 @@ class MyApp extends StatelessWidget {
             textTheme: languageProvider.isArabic
                 ? GoogleFonts.amiriTextTheme(Theme.of(context).textTheme)
                 : GoogleFonts.manropeTextTheme(Theme.of(context).textTheme),
+            brightness: Brightness.light,
           ),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              brightness: Brightness.dark,
+            ),
+            useMaterial3: true,
+            fontFamily: null, // Remove default fontFamily
+            textTheme: languageProvider.isArabic
+                ? GoogleFonts.amiriTextTheme(ThemeData.dark().textTheme)
+                : GoogleFonts.manropeTextTheme(ThemeData.dark().textTheme),
+            brightness: Brightness.dark,
+          ),
+          themeMode: themeProvider.isDarkMode
+              ? ThemeMode.dark
+              : ThemeMode.light,
           home: const SplashScreen(),
           debugShowCheckedModeBanner: false,
         );
@@ -63,5 +79,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

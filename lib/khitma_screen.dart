@@ -65,9 +65,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
             backgroundColor: themeProvider.screenBackgroundColor,
             body: Stack(
               children: [
-                // Background images for dark mode only
-                if (themeProvider.isDarkMode)
-                  Positioned.fill(
+                // Background image for both themes
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: themeProvider.isDarkMode ? 0.5 : 1.0,
                     child: Image.asset(
                       'assets/background_elements/5.png',
                       fit: BoxFit.cover,
@@ -75,6 +76,8 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
+                ),
+                // Color overlay for dark mode only
                 if (themeProvider.isDarkMode)
                   Positioned.fill(
                     child: Container(
@@ -99,9 +102,7 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                         },
                         icon: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          color: themeProvider.isDarkMode
-                              ? Colors.white
-                              : Colors.black,
+                          color: Colors.white,
                           size: 22,
                         ),
                       ),
@@ -110,9 +111,7 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                           languageProvider.isArabic ? 'الختمة' : 'Khitma',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: themeProvider.isDarkMode
-                                ? Colors.white
-                                : Colors.black,
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -127,13 +126,20 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                   left: 0,
                   right: 0,
                   top: themeProvider.isDarkMode
-                      ? mediaQuery.size.height * 0.46
+                      ? mediaQuery.size.height * 0.40
                       : mediaQuery.size.height * 0.4,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
                     decoration: BoxDecoration(
+                      gradient: themeProvider.isDarkMode
+                          ? const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xFF251629), Color(0xFF4C3B6E)],
+                            )
+                          : null,
                       color: themeProvider.isDarkMode
-                          ? themeProvider.secondaryColor
+                          ? null
                           : Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(
@@ -160,7 +166,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                         Text(
                           languageProvider.isArabic ? 'الختمة' : 'Khitma',
                           style: TextStyle(
-                            color: themeProvider.primaryTextColor,
+                            color: themeProvider.isDarkMode
+                                ? const Color(0xFFF2EDE0)
+                                : const Color(0xFF051F20),
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
@@ -171,7 +179,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                               ? 'ابدأ رحلتك الروحية بسهولة — ابدأ ختمة جديدة، أكمل وردك اليومي، أو انضم إلى مجموعة لتلاوة جماعية.'
                               : 'Begin your spiritual journey with ease — start a new Khitma, complete your daily Werd, or join a group to recite together.',
                           style: TextStyle(
-                            color: themeProvider.secondaryTextColor,
+                            color: themeProvider.isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF051F20),
                             fontSize: 16,
                             height: 1.4,
                           ),
@@ -196,10 +206,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: themeProvider.isDarkMode
-                                      ? const Color(0xFFF5E6D3)
-                                      : const Color(0xFF2D5A27),
+                                      ? const Color(0xFFF2EDE0)
+                                      : const Color(0xFF235347),
                                   foregroundColor: themeProvider.isDarkMode
-                                      ? const Color(0xFF2D1B3D)
+                                      ? const Color(0xFF392852)
                                       : Colors.white,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -210,9 +220,12 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                   languageProvider.isArabic
                                       ? 'ختمة جديدة'
                                       : 'New Khitma',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
+                                    color: themeProvider.isDarkMode
+                                        ? const Color(0xFF392852)
+                                        : Colors.white,
                                   ),
                                 ),
                               ),
@@ -234,10 +247,10 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: themeProvider.isDarkMode
-                                      ? Colors.white
-                                      : const Color(0xFF7FB069),
+                                      ? const Color(0xFFFFFFFF)
+                                      : const Color(0xFF8EB69B),
                                   foregroundColor: themeProvider.isDarkMode
-                                      ? themeProvider.secondaryColor
+                                      ? const Color(0xFF392852)
                                       : Colors.white,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -252,7 +265,7 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: themeProvider.isDarkMode
-                                        ? themeProvider.secondaryColor
+                                        ? const Color(0xFF392852)
                                         : Colors.white,
                                   ),
                                 ),

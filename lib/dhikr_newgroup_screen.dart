@@ -64,17 +64,10 @@ class _DhikrNewGroupScreenState extends State<DhikrNewGroupScreen> {
             body: Stack(
               children: [
                 // Background images covering entire screen
-                if (isLightMode)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      color: Colors.white.withOpacity(0.7),
-                      colorBlendMode: BlendMode.lighten,
-                    ),
-                  ),
-                if (!isLightMode) ...[
-                  Positioned.fill(
+                // Background image for both themes
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: !isLightMode ? 0.5 : 1.0,
                     child: Image.asset(
                       themeProvider.backgroundImage3,
                       fit: BoxFit.cover,
@@ -82,10 +75,12 @@ class _DhikrNewGroupScreenState extends State<DhikrNewGroupScreen> {
                       filterQuality: FilterQuality.medium,
                     ),
                   ),
+                ),
+                // Color overlay for dark mode only
+                if (!isLightMode)
                   Positioned.fill(
                     child: Container(color: Colors.black.withOpacity(0.2)),
                   ),
-                ],
                 // Main content with SafeArea
                 SafeArea(
                   child: LayoutBuilder(

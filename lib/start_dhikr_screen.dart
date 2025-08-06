@@ -95,18 +95,17 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                 children: [
                   // Background image
                   Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800,
-                      filterQuality: FilterQuality.medium,
+                    child: Opacity(
+                      opacity: !isLightMode ? 0.5 : 1.0,
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800,
+                        filterQuality: FilterQuality.medium,
+                      ),
                     ),
                   ),
-                  // Color overlay based on theme
-                  if (isLightMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
-                    ),
+                  // Color overlay for dark mode only
                   if (!isLightMode)
                     Positioned.fill(
                       child: Container(color: Colors.black.withOpacity(0.2)),

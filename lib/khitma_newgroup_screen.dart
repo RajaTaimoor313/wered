@@ -53,19 +53,18 @@ class _KhitmaNewgroupScreenState extends State<KhitmaNewgroupScreen> {
                 children: [
                   // Background image with optimized loading (always visible)
                   Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800, // Optimize memory usage
-                      filterQuality: FilterQuality
-                          .medium, // Balance quality and performance
+                    child: Opacity(
+                      opacity: themeProvider.isDarkMode ? 0.5 : 1.0,
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800, // Optimize memory usage
+                        filterQuality: FilterQuality
+                            .medium, // Balance quality and performance
+                      ),
                     ),
                   ),
-                  // Color overlay based on theme
-                  if (!themeProvider.isDarkMode)
-                    Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
-                    ),
+                  // Color overlay for dark mode only
                   if (themeProvider.isDarkMode)
                     Positioned.fill(
                       child: Container(color: Colors.black.withOpacity(0.2)),
@@ -321,7 +320,8 @@ class _KhitmaNewgroupScreenState extends State<KhitmaNewgroupScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const WeredScreen(),
+                                            builder: (context) =>
+                                                const WeredScreen(),
                                           ),
                                         );
                                       }

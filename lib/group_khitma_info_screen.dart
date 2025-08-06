@@ -37,11 +37,14 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                 children: [
                   // Background image with optimized loading (always visible)
                   Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800, // Optimize memory usage
-                      filterQuality: FilterQuality.medium,
+                    child: Opacity(
+                      opacity: isDarkMode ? 0.5 : 1.0,
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800, // Optimize memory usage
+                        filterQuality: FilterQuality.medium,
+                      ),
                     ),
                   ),
                   SafeArea(
