@@ -275,16 +275,39 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Text(
-                                    'Daily Wered',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: themeProvider.isDarkMode
-                                          ? const Color(0xFFF7F3E8)
-                                          : const Color(0xFF205C3B),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        languageProvider.isArabic
+                                            ? 'الورد اليومي'
+                                            : 'Daily Wered',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: themeProvider.isDarkMode
+                                              ? const Color(0xFFF7F3E8)
+                                              : const Color(0xFF205C3B),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        languageProvider.isArabic
+                                            ? 'اشغل قلبك بذكر الله. اختر سورة لتبدأ رحلتك الروحية والسلام.'
+                                            : 'Engage your heart in the remembrance of Allah. Select a Surah to begin your spiritual journey and peace.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: themeProvider.isDarkMode
+                                              ? const Color(
+                                                  0xFFF7F3E8,
+                                                ).withOpacity(0.8)
+                                              : const Color(
+                                                  0xFF205C3B,
+                                                ).withOpacity(0.8),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(
@@ -332,7 +355,9 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                       fontSize: 16,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: 'No. of pages',
+                                      hintText: languageProvider.isArabic
+                                          ? 'عدد الصفحات'
+                                          : 'No. of pages',
                                       hintStyle: TextStyle(
                                         color: themeProvider.isDarkMode
                                             ? const Color(
@@ -353,7 +378,8 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                 InkWell(
                                   onTap: () {
                                     setState(() {
-                                      if (_showAllSurahs && _selectedSurahs.isNotEmpty) {
+                                      if (_showAllSurahs &&
+                                          _selectedSurahs.isNotEmpty) {
                                         // If showing all surahs and some are selected, hide all except selected
                                         _showAllSurahs = false;
                                         _hasSelectedSurahs = true;
@@ -387,11 +413,16 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          _selectedSurahs.isEmpty 
-                                              ? 'Choose surah'
+                                          _selectedSurahs.isEmpty
+                                              ? (languageProvider.isArabic
+                                                    ? 'اختر السورة'
+                                                    : 'Choose surah')
+                                              : languageProvider.isArabic
+                                              ? '${_selectedSurahs.length} سورة مختارة'
                                               : '${_selectedSurahs.length} surah(s) selected',
                                           style: TextStyle(
                                             color: themeProvider.isDarkMode
@@ -405,7 +436,9 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                           ),
                                         ),
                                         Icon(
-                                          _showAllSurahs ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                                          _showAllSurahs
+                                              ? Icons.keyboard_arrow_up
+                                              : Icons.keyboard_arrow_down,
                                           color: themeProvider.isDarkMode
                                               ? const Color(
                                                   0xFFF7F3E8,
@@ -430,104 +463,130 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                         filteredSurahs = _surahs;
                                       } else if (_hasSelectedSurahs) {
                                         // Show only selected surahs
-                                        filteredSurahs = _surahs.where((surah) => 
-                                          _selectedSurahs.contains(surah['name'])).toList();
+                                        filteredSurahs = _surahs
+                                            .where(
+                                              (surah) => _selectedSurahs
+                                                  .contains(surah['name']),
+                                            )
+                                            .toList();
                                       } else {
                                         filteredSurahs = [];
                                       }
-                                      
+
                                       return ListView.builder(
                                         shrinkWrap: true,
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: filteredSurahs.length,
                                         itemBuilder: (context, index) {
                                           final surah = filteredSurahs[index];
-                                    final isSelected = _selectedSurahs.contains(
-                                      surah['name'],
-                                    );
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 7),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            if (_selectedSurahs.contains(
-                                              surah['name'],
-                                            )) {
-                                              _selectedSurahs.remove(
-                                                surah['name'],
-                                              );
-                                            } else {
-                                              _selectedSurahs.add(
-                                                surah['name']!,
-                                              );
-                                            }
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                              12,
+                                          final isSelected = _selectedSurahs
+                                              .contains(surah['name']);
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 7,
                                             ),
-                                            border: Border.all(
-                                              color: isSelected
-                                                  ? Colors.grey[400]!
-                                                  : Colors.grey[300]!,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (_selectedSurahs.contains(
+                                                    surah['name'],
+                                                  )) {
+                                                    _selectedSurahs.remove(
+                                                      surah['name'],
+                                                    );
+                                                  } else {
+                                                    _selectedSurahs.add(
                                                       surah['name']!,
+                                                    );
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.all(
+                                                  10,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                    color: isSelected
+                                                        ? Colors.grey[400]!
+                                                        : Colors.grey[300]!,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            languageProvider
+                                                                    .isArabic
+                                                                ? surah['arabic']!
+                                                                : surah['name']!,
+                                                            style:
+                                                                const TextStyle(
+                                                                  color: Color(
+                                                                    0xFF4A148C,
+                                                                  ),
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 4,
+                                                          ),
+                                                          if (!languageProvider
+                                                              .isArabic)
+                                                            Text(
+                                                              surah['subtitle']!,
+                                                              style:
+                                                                  const TextStyle(
+                                                                    color: Color(
+                                                                      0xFF4A148C,
+                                                                    ),
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      languageProvider.isArabic
+                                                          ? surah['name']!
+                                                          : surah['arabic']!,
                                                       style: const TextStyle(
                                                         color: Color(
                                                           0xFF4A148C,
                                                         ),
-                                                        fontSize: 16,
+                                                        fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
                                                     ),
-                                                    const SizedBox(height: 4),
-                                                    Text(
-                                                      surah['subtitle']!,
-                                                      style: const TextStyle(
+                                                    const SizedBox(width: 8),
+                                                    if (isSelected)
+                                                      const Icon(
+                                                        Icons.check_circle,
                                                         color: Color(
                                                           0xFF4A148C,
                                                         ),
-                                                        fontSize: 14,
+                                                        size: 24,
                                                       ),
-                                                    ),
                                                   ],
                                                 ),
                                               ),
-                                              Text(
-                                                surah['arabic']!,
-                                                style: const TextStyle(
-                                                  color: Color(0xFF4A148C),
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              if (isSelected)
-                                                const Icon(
-                                                  Icons.check_circle,
-                                                  color: Color(0xFF4A148C),
-                                                  size: 24,
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                                            ),
+                                          );
                                         },
                                       );
                                     },
@@ -565,7 +624,9 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          'Agree to our Privacy Policy & Terms and Conditions',
+                                          languageProvider.isArabic
+                                              ? 'أوافق على سياسة الخصوصية والشروط والأحكام'
+                                              : 'Agree to our Privacy Policy & Terms and Conditions',
                                           style: TextStyle(
                                             color: themeProvider.isDarkMode
                                                 ? const Color(
@@ -644,9 +705,11 @@ class _DailyWeredScreenState extends State<DailyWeredScreen> {
                                         ),
                                         elevation: 0,
                                       ),
-                                      child: const Text(
-                                        'Start Wered',
-                                        style: TextStyle(
+                                      child: Text(
+                                        languageProvider.isArabic
+                                            ? 'ابدأ الورد'
+                                            : 'Start Wered',
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                         ),

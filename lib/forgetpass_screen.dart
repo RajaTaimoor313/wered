@@ -193,9 +193,10 @@ class ForgetPassScreen extends StatelessWidget {
                                   child: ElevatedButton(
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: themeProvider.primaryColor,
+                                      backgroundColor:
+                                          themeProvider.buttonBackgroundColor,
                                       foregroundColor:
-                                          themeProvider.primaryTextColor,
+                                          themeProvider.buttonTextColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),

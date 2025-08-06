@@ -183,28 +183,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Scaffold(
             body: Stack(
               children: [
-                // White background with geometric pattern
-                if (isLightMode)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      color: Colors.white.withOpacity(0.7),
-                      colorBlendMode: BlendMode.lighten,
-                    ),
-                  ),
-                if (!isLightMode)
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: themeProvider.gradientColors,
-                      ),
-                    ),
-                  ),
+                // Background
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: themeProvider.screenBackgroundColor,
+                ),
                 if (!isLightMode)
                   Positioned.fill(
                     child: Image.asset(

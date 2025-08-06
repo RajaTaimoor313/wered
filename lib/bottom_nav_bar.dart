@@ -22,6 +22,14 @@ class BottomNavBar extends StatelessWidget {
         return Container(
           decoration: BoxDecoration(
             color: themeProvider.backgroundColor,
+            border: Border(
+              top: BorderSide(
+                color: themeProvider.isDarkMode
+                    ? Colors.white.withOpacity(0.2)
+                    : const Color(0xFFE0E0E0),
+                width: 1,
+              ),
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
@@ -93,8 +101,8 @@ class _NavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-        final selectedColor = themeProvider.primaryTextColor;
-        final unselectedColor = themeProvider.secondaryTextColor;
+        final selectedColor = themeProvider.bottomNavSelectedColor;
+        final unselectedColor = themeProvider.bottomNavUnselectedColor;
 
         return GestureDetector(
           onTap: onTap,

@@ -33,7 +33,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
 
   Future<void> _loadSurahData() async {
     try {
-      final String jsonString = await rootBundle.loadString('assets/surah_data.json');
+      final String jsonString = await rootBundle.loadString(
+        'assets/surah_data.json',
+      );
       final List<dynamic> jsonData = json.decode(jsonString);
       setState(() {
         surahData = jsonData.cast<Map<String, dynamic>>();
@@ -49,15 +51,15 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
 
   Map<String, String>? _getCurrentSurahContent() {
     if (surahData.isEmpty) return null;
-    
+
     final currentSurahName = widget.selectedSurahs[currentSurahIndex];
     final surah = surahData.firstWhere(
       (s) => s['name'] == currentSurahName,
       orElse: () => {},
     );
-    
+
     if (surah.isEmpty) return null;
-    
+
     return {
       'title': surah['title'] ?? currentSurahName,
       'arabic': surah['arabic'] ?? 'Content not available',
@@ -82,9 +84,7 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                 ),
               ),
               child: const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF4A148C),
-                ),
+                child: CircularProgressIndicator(color: Color(0xFF4A148C)),
               ),
             ),
           );
@@ -124,7 +124,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Go Back'),
+                      child: Text(
+                        languageProvider.isArabic ? 'العودة' : 'Go Back',
+                      ),
                     ),
                   ],
                 ),
@@ -193,7 +195,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  'Daily Wered',
+                                  languageProvider.isArabic
+                                      ? 'الورد اليومي'
+                                      : 'Daily Wered',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: themeProvider.isDarkMode
@@ -214,7 +218,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            'Engage your heart in the remembrance of Allah. Select a Dhikr to begin your spiritual connection and peace.',
+                            languageProvider.isArabic
+                                ? 'اشغل قلبك بذكر الله. اختر ذكراً لتبدأ اتصالك الروحي والسلام.'
+                                : 'Engage your heart in the remembrance of Allah. Select a Dhikr to begin your spiritual connection and peace.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: themeProvider.isDarkMode
@@ -228,7 +234,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'No. of Pages: ${widget.pages}',
+                            languageProvider.isArabic
+                                ? 'عدد الصفحات: ${widget.pages}'
+                                : 'No. of Pages: ${widget.pages}',
                             style: TextStyle(
                               color: themeProvider.isDarkMode
                                   ? const Color(0xFFF7F3E8)
@@ -267,7 +275,7 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 8),
                                   // Arabic text
                                   Text(
                                     content?['arabic'] ??
@@ -298,9 +306,11 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                   onPressed: () {
                                     // Handle save wered
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                         content: Text(
-                                          'Wered saved successfully!',
+                                          languageProvider.isArabic
+                                              ? 'تم حفظ الورد بنجاح!'
+                                              : 'Wered saved successfully!',
                                         ),
                                       ),
                                     );
@@ -312,9 +322,11 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Save Wered',
-                                    style: TextStyle(
+                                  child: Text(
+                                    languageProvider.isArabic
+                                        ? 'حفظ الورد'
+                                        : 'Save Wered',
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -337,9 +349,11 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Change Surah',
-                                    style: TextStyle(
+                                  child: Text(
+                                    languageProvider.isArabic
+                                        ? 'تغيير السورة'
+                                        : 'Change Surah',
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -363,9 +377,11 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             content: Text(
-                                              'You have reached the last surah!',
+                                              languageProvider.isArabic
+                                                  ? 'لقد وصلت إلى السورة الأخيرة!'
+                                                  : 'You have reached the last surah!',
                                             ),
                                           ),
                                         );
@@ -382,7 +398,9 @@ class _WeredReadingScreenState extends State<WeredReadingScreen> {
                                       ),
                                     ),
                                     child: Text(
-                                      'Next Surah (${currentSurahIndex + 1}/${widget.selectedSurahs.length})',
+                                      languageProvider.isArabic
+                                          ? 'السورة التالية (${currentSurahIndex + 1}/${widget.selectedSurahs.length})'
+                                          : 'Next Surah (${currentSurahIndex + 1}/${widget.selectedSurahs.length})',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,

@@ -299,11 +299,10 @@ class LoginScreen extends StatelessWidget {
                                       );
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: themeProvider.isDarkMode
-                                          ? const Color(0xFF1F1F1F)
-                                          : const Color(0xFF2D1B69),
+                                      backgroundColor:
+                                          themeProvider.buttonBackgroundColor,
                                       foregroundColor:
-                                          themeProvider.primaryTextColor,
+                                          themeProvider.buttonTextColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),

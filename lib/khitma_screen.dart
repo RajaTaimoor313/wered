@@ -8,6 +8,7 @@ import 'bottom_nav_bar.dart';
 import 'dhikr_screen.dart' show DhikrScreen;
 import 'new_khitma_screen.dart';
 import 'daily_wered_screen.dart';
+import 'khitma_group_screen.dart';
 
 class KhitmaScreen extends StatefulWidget {
   const KhitmaScreen({super.key});
@@ -61,12 +62,11 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
-            backgroundColor: themeProvider.backgroundColor,
+            backgroundColor: themeProvider.screenBackgroundColor,
             body: Stack(
               children: [
-                // Background - conditional based on theme
+                // Background images for dark mode only
                 if (themeProvider.isDarkMode)
-                  // Full-page background image for dark mode
                   Positioned.fill(
                     child: Image.asset(
                       'assets/background_elements/5.png',
@@ -76,26 +76,9 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                     ),
                   ),
                 if (themeProvider.isDarkMode)
-                  // Color overlay for dark mode
                   Positioned.fill(
                     child: Container(
                       color: themeProvider.backgroundImageOverlay,
-                    ),
-                  ),
-                if (!themeProvider.isDarkMode)
-                  // Light theme background with Quran image at top
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: mediaQuery.size.height * 0.5,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/background_elements/5.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
                     ),
                   ),
                 // Header (back button and title) over image
@@ -281,7 +264,15 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                               width: double.infinity,
                               height: 48,
                               child: OutlinedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const KhitmaGroupScreen(),
+                                    ),
+                                  );
+                                },
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor:
                                       themeProvider.primaryTextColor,

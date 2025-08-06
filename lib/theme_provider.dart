@@ -50,38 +50,98 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   // Theme colors
-  Color get primaryColor => _isDarkMode ? const Color(0xFF2D1B69) : Colors.white;
-  Color get secondaryColor => _isDarkMode ? const Color(0xFF6B46C1) : const Color(0xFFF8F9FA);
-  Color get tertiaryColor => _isDarkMode ? const Color(0xFF8B5CF6) : const Color(0xFFE9ECEF);
-  
+  Color get primaryColor =>
+      _isDarkMode ? const Color(0xFF251629) : Colors.white;
+  Color get secondaryColor =>
+      _isDarkMode ? const Color(0xFF6B46C1) : const Color(0xFFF8F9FA);
+  Color get tertiaryColor =>
+      _isDarkMode ? const Color(0xFF8B5CF6) : const Color(0xFFE9ECEF);
+
   // Text colors
-  Color get primaryTextColor => _isDarkMode ? Colors.white : const Color(0xFF2D1B69);
-  Color get secondaryTextColor => _isDarkMode ? Colors.white70 : Colors.black87;
-  Color get accentTextColor => _isDarkMode ? Colors.white : const Color(0xFF2D1B69);
-  
+  Color get primaryTextColor =>
+      _isDarkMode ? Colors.white : const Color(0xFFFAFAFA);
+  Color get secondaryTextColor =>
+      _isDarkMode ? Colors.white : const Color(0xFFFAFAFA);
+  Color get accentTextColor =>
+      _isDarkMode ? Colors.white : const Color(0xFFFAFAFA);
+
   // Background colors
-  Color get backgroundColor => _isDarkMode ? const Color(0xFF2D1B69) : Colors.white;
-  Color get cardBackgroundColor => _isDarkMode ? Colors.white.withOpacity(0.1) : const Color(0xFF2D1B69).withOpacity(0.1);
-  Color get borderColor => _isDarkMode ? Colors.white.withOpacity(0.2) : const Color(0xFF2D1B69).withOpacity(0.2);
-  
+  Color get backgroundColor =>
+      _isDarkMode ? const Color(0xFF251629) : Colors.white;
+  Color get cardBackgroundColor =>
+      _isDarkMode ? Colors.white.withOpacity(0.1) : const Color(0xFFE8F5E8);
+  Color get borderColor =>
+      _isDarkMode ? Colors.white : const Color(0xFFE0E0E0);
+
+  // Progress colors
+  Color get progressColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF4CAF50);
+  Color get progressBackgroundColor =>
+      _isDarkMode ? Colors.white.withOpacity(0.2) : const Color(0xFFE0E0E0);
+
   // Gradient colors
-  List<Color> get gradientColors => _isDarkMode 
-    ? [const Color(0xFF2D1B69), const Color(0xFF6B46C1), const Color(0xFF8B5CF6)]
-    : [Colors.white, const Color(0xFFF8F9FA), const Color(0xFFE9ECEF)];
+  List<Color> get gradientColors => _isDarkMode
+      ? [
+          const Color(0xFF251629),
+          const Color(0xFF4C3B6E),
+        ]
+      : [
+          const Color(0xFF235347),
+          const Color(0xFF235347),
+          const Color(0xFF235347),
+        ];
 
   // Background image overlay colors
-  Color get backgroundImageOverlay => _isDarkMode 
-    ? const Color(0xFF2D1B69).withOpacity(0.7) // Purple overlay for dark mode
-    : Colors.transparent; // No overlay for light mode
+  Color get backgroundImageOverlay => _isDarkMode
+      ? Colors.transparent // Let gradient show through in dark mode
+      : Colors.transparent; // No overlay for light mode
 
   // Background image paths
-  String get backgroundImage1 => _isDarkMode ? 'assets/background_elements/1.png' : 'assets/background_elements/1_LE.png';
-  String get backgroundImage2 => _isDarkMode ? 'assets/background_elements/2.png' : 'assets/background_elements/2_LE.png';
-  String get backgroundImage3 => 'assets/background_elements/3_background.png'; // Same for both themes
+  String get backgroundImage1 => _isDarkMode
+      ? 'assets/background_elements/1.png'
+      : 'assets/background_elements/1_LE.png';
+  String get backgroundImage2 => _isDarkMode
+      ? 'assets/background_elements/2.png'
+      : 'assets/background_elements/2_LE.png';
+  String get backgroundImage3 =>
+      'assets/background_elements/3_background.png'; // Same for both themes
+
+  // Button colors
+  Color get buttonBackgroundColor =>
+      _isDarkMode ? const Color(0xFF251629) : const Color(0xFF051F20);
+  Color get buttonTextColor => Colors.white;
+
+  // Screen background colors
+  Color get screenBackgroundColor =>
+      _isDarkMode ? const Color(0xFF251629) : const Color(0xFFFFFFFF);
+
+  // Home screen specific colors for light theme
+  Color get homeUsernameColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF235347);
+  Color get homeSectionTitleColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF235347);
+  Color get homeBoxTextColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF1F1F1F);
+  Color get homeBoxBorderColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF051F20);
+  Color get homeProgressColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF051F20);
+
+  // Bottom navigation bar colors
+  Color get bottomNavSelectedColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF235347);
+  Color get bottomNavUnselectedColor =>
+      _isDarkMode ? Colors.white : const Color(0xFFCCCCCC);
 
   // Switch colors
-  Color get switchActiveColor => _isDarkMode ? Colors.white : const Color(0xFF2D1B69);
-  Color get switchActiveTrackColor => _isDarkMode ? Colors.white.withOpacity(0.3) : const Color(0xFF2D1B69).withOpacity(0.3);
-  Color get switchInactiveThumbColor => _isDarkMode ? Colors.white : const Color(0xFF2D1B69);
-  Color get switchInactiveTrackColor => _isDarkMode ? Colors.white.withOpacity(0.2) : const Color(0xFF2D1B69).withOpacity(0.2);
-} 
+  Color get switchActiveColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF251629);
+  Color get switchActiveTrackColor => _isDarkMode
+      ? Colors.white.withOpacity(0.3)
+      : const Color(0xFF251629).withOpacity(0.3);
+  Color get switchInactiveThumbColor =>
+      _isDarkMode ? Colors.white : const Color(0xFF251629);
+  Color get switchInactiveTrackColor => _isDarkMode
+      ? Colors.white.withOpacity(0.2)
+      : const Color(0xFF251629).withOpacity(0.2);
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
+import 'group_dhikr_details_screen.dart';
 
 class DhikrNewGroupScreen extends StatefulWidget {
   const DhikrNewGroupScreen({super.key});
@@ -436,19 +437,31 @@ class _DhikrNewGroupScreenState extends State<DhikrNewGroupScreen> {
 
                                 // Create Group Button
                                 SizedBox(
-                           width: double.infinity,
-                           child: ElevatedButton(
-                             style: ElevatedButton.styleFrom(
-                               backgroundColor: isLightMode ? const Color(0xFF205C3B) : Colors.white,
-                               disabledBackgroundColor: isLightMode ? const Color(0xFF205C3B).withOpacity(0.6) : Colors.white,
-                               foregroundColor: isLightMode ? Colors.white : const Color(0xFF6B46C1),
-                               disabledForegroundColor: isLightMode ? Colors.white.withOpacity(0.6) : const Color(0xFF6B46C1).withOpacity(0.6),
-                               minimumSize: const Size.fromHeight(56),
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(28),
-                               ),
-                               elevation: 0,
-                             ),
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isLightMode
+                                          ? const Color(0xFF205C3B)
+                                          : Colors.white,
+                                      disabledBackgroundColor: isLightMode
+                                          ? const Color(
+                                              0xFF205C3B,
+                                            ).withOpacity(0.6)
+                                          : Colors.white,
+                                      foregroundColor: isLightMode
+                                          ? Colors.white
+                                          : const Color(0xFF6B46C1),
+                                      disabledForegroundColor: isLightMode
+                                          ? Colors.white.withOpacity(0.6)
+                                          : const Color(
+                                              0xFF6B46C1,
+                                            ).withOpacity(0.6),
+                                      minimumSize: const Size.fromHeight(56),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28),
+                                      ),
+                                      elevation: 0,
+                                    ),
                                     onPressed:
                                         _agreeToTerms &&
                                             _groupNameController
@@ -457,8 +470,43 @@ class _DhikrNewGroupScreenState extends State<DhikrNewGroupScreen> {
                                             _selectedDhikr != null &&
                                             _targetController.text.isNotEmpty
                                         ? () {
-                                            // Handle group creation
-                                            Navigator.pop(context);
+                                            // Get selected dhikr data
+                                            final selectedDhikrData =
+                                                _dhikrOptions.firstWhere(
+                                                  (dhikr) =>
+                                                      dhikr['title'] ==
+                                                      _selectedDhikr,
+                                                  orElse: () => {
+                                                    'title': _selectedDhikr!,
+                                                    'titleArabic':
+                                                        _selectedDhikr!,
+                                                    'subtitle': '',
+                                                  },
+                                                );
+
+                                            // Navigate to group dhikr details screen
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => GroupDhikrDetailsScreen(
+                                                  dhikrTitle:
+                                                      selectedDhikrData['title']!,
+                                                  dhikrTitleArabic:
+                                                      selectedDhikrData['titleArabic'] ??
+                                                      selectedDhikrData['title']!,
+                                                  dhikrSubtitle:
+                                                      selectedDhikrData['subtitle']!,
+                                                  dhikrArabic:
+                                                      selectedDhikrData['titleArabic'] ??
+                                                      selectedDhikrData['title']!,
+                                                  target: int.parse(
+                                                    _targetController.text,
+                                                  ),
+                                                  currentCount:
+                                                      0, // Will be fetched from server in the future
+                                                ),
+                                              ),
+                                            );
                                           }
                                         : null,
                                     child: Text(

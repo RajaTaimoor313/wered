@@ -7,6 +7,7 @@ import 'app_localizations.dart';
 import 'khitma_screen.dart';
 import 'bottom_nav_bar.dart';
 import 'dhikr_screen.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,29 +67,32 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: themeProvider.gradientColors,
-                ),
+                gradient: themeProvider.isDarkMode
+                    ? const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF251629),
+                          Color(0xFF4C3B6E),
+                        ],
+                      )
+                    : null,
+                color: themeProvider.isDarkMode ? null : themeProvider.screenBackgroundColor,
               ),
               child: Stack(
                 children: [
-                  // Background image with optimized loading (always visible)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      cacheWidth: 800, // Optimize memory usage
-                      filterQuality: FilterQuality
-                          .medium, // Balance quality and performance
-                    ),
-                  ),
-                  // Color overlay based on theme
-                  if (!themeProvider.isDarkMode)
+                  // Background image with optimized loading (dark mode only)
+                  if (themeProvider.isDarkMode)
                     Positioned.fill(
-                      child: Container(color: Colors.white.withOpacity(0.7)),
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800, // Optimize memory usage
+                        filterQuality: FilterQuality
+                            .medium, // Balance quality and performance
+                      ),
                     ),
+                  // Color overlay for dark mode only
                   if (themeProvider.isDarkMode)
                     Positioned.fill(
                       child: Container(color: Colors.black.withOpacity(0.2)),
@@ -163,7 +167,9 @@ class _ProfileSection extends StatelessWidget {
                     height: 48,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: themeProvider.cardBackgroundColor,
+                      color: themeProvider.isDarkMode
+                          ? themeProvider.cardBackgroundColor
+                          : Colors.grey.shade100,
                       border: Border.all(
                         color: themeProvider.borderColor,
                         width: 2,
@@ -180,19 +186,22 @@ class _ProfileSection extends StatelessWidget {
                 Text(
                   appLocalizations.salaamAli,
                   style: TextStyle(
-                    color: themeProvider.primaryTextColor,
+                    color: themeProvider.homeUsernameColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: themeProvider.cardBackgroundColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationScreen(),
+                  ),
+                );
+              },
               child: Icon(
                 Icons.notifications_none,
                 color: themeProvider.primaryTextColor,
@@ -222,7 +231,7 @@ class _ProgressSection extends StatelessWidget {
             Text(
               appLocalizations.overallProgress,
               style: TextStyle(
-                color: themeProvider.primaryTextColor,
+                color: themeProvider.homeSectionTitleColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -275,37 +284,37 @@ class _ProgressCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: themeProvider.cardBackgroundColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: themeProvider.borderColor),
+            border: Border.all(color: themeProvider.homeBoxBorderColor, width: 2),
           ),
           child: Column(
             children: [
               Text(
                 title,
                 style: TextStyle(
-                  color: themeProvider.secondaryTextColor,
+                  color: themeProvider.homeBoxTextColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 60,
-                width: 60,
+                height: 80,
+                width: 80,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     CircularProgressIndicator(
                       value: progress,
-                      strokeWidth: 8,
+                      strokeWidth: 5,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        themeProvider.primaryTextColor,
+                        themeProvider.homeProgressColor,
                       ),
-                      backgroundColor: themeProvider.borderColor,
+                      backgroundColor: themeProvider.progressBackgroundColor,
                     ),
                     Text(
                       "${(progress * 100).toInt()}%",
                       style: TextStyle(
-                        color: themeProvider.primaryTextColor,
+                        color: themeProvider.homeBoxTextColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -317,7 +326,7 @@ class _ProgressCard extends StatelessWidget {
               Text(
                 subtitle,
                 style: TextStyle(
-                  color: themeProvider.primaryTextColor,
+                  color: themeProvider.homeBoxTextColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -347,7 +356,7 @@ class _StreakSection extends StatelessWidget {
             Text(
               appLocalizations.currentStreak,
               style: TextStyle(
-                color: themeProvider.primaryTextColor,
+                color: themeProvider.homeSectionTitleColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -358,7 +367,7 @@ class _StreakSection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: themeProvider.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: themeProvider.borderColor),
+                border: Border.all(color: themeProvider.homeBoxBorderColor, width: 2),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -384,7 +393,7 @@ class _StreakSection extends StatelessWidget {
                           Text(
                             appLocalizations.yourCurrentStreak,
                             style: TextStyle(
-                              color: themeProvider.secondaryTextColor,
+                              color: themeProvider.homeBoxTextColor,
                               fontSize: 14,
                             ),
                           ),
@@ -392,7 +401,7 @@ class _StreakSection extends StatelessWidget {
                           Text(
                             appLocalizations.days,
                             style: TextStyle(
-                              color: themeProvider.primaryTextColor,
+                              color: themeProvider.homeBoxTextColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -434,7 +443,7 @@ class _MotivationalVerseSection extends StatelessWidget {
             Text(
               appLocalizations.motivationalVerse,
               style: TextStyle(
-                color: themeProvider.primaryTextColor,
+                color: themeProvider.homeSectionTitleColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -445,9 +454,15 @@ class _MotivationalVerseSection extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: themeProvider.isDarkMode
-                    ? const Color(0xFFF5F5DC)
-                    : const Color(0xFF2D1B69),
+                    ? Colors.white
+                    : const Color(0xFFE8F5E8),
                 borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: themeProvider.isDarkMode
+                      ? Colors.white
+                      : const Color(0xFF051F20),
+                  width: 2,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -468,8 +483,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                         height: 20,
                         decoration: BoxDecoration(
                           color: themeProvider.isDarkMode
-                              ? const Color(0xFF8B4513)
-                              : Colors.white,
+                              ? const Color(0xFF251629)
+                              : const Color(0xFF4CAF50),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(4),
                           ),
@@ -480,8 +495,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                         height: 20,
                         decoration: BoxDecoration(
                           color: themeProvider.isDarkMode
-                              ? const Color(0xFF8B4513)
-                              : Colors.white,
+                              ? const Color(0xFF251629)
+                              : const Color(0xFF4CAF50),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(4),
                           ),
@@ -496,8 +511,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
                       color: themeProvider.isDarkMode
-                          ? const Color(0xFF2D1B69)
-                          : Colors.white,
+                          ? const Color(0xFF251629)
+                          : const Color(0xFF051F20),
                       fontSize: 16,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
@@ -511,8 +526,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                         child: Container(
                           height: 1,
                           color: themeProvider.isDarkMode
-                              ? const Color(0xFF8B4513)
-                              : Colors.white,
+                              ? const Color(0xFF251629)
+                              : const Color(0xFF051F20),
                         ),
                       ),
                       Container(
@@ -521,8 +536,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                         height: 8,
                         decoration: BoxDecoration(
                           color: themeProvider.isDarkMode
-                              ? const Color(0xFF8B4513)
-                              : Colors.white,
+                              ? const Color(0xFF251629)
+                              : const Color(0xFF051F20),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -530,7 +545,7 @@ class _MotivationalVerseSection extends StatelessWidget {
                         child: Container(
                           height: 1,
                           color: themeProvider.isDarkMode
-                              ? const Color(0xFF8B4513)
+                              ? const Color(0xFF251629)
                               : Colors.white,
                         ),
                       ),
@@ -541,8 +556,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                     appLocalizations.surahAnNahl,
                     style: TextStyle(
                       color: themeProvider.isDarkMode
-                          ? const Color(0xFF8B4513)
-                          : Colors.white,
+                          ? const Color(0xFF251629)
+                          : const Color(0xFF051F20),
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -552,8 +567,8 @@ class _MotivationalVerseSection extends StatelessWidget {
                     "(16:128)",
                     style: TextStyle(
                       color: themeProvider.isDarkMode
-                          ? const Color(0xFF8B4513)
-                          : Colors.white,
+                          ? const Color(0xFF251629)
+                          : const Color(0xFF051F20),
                       fontSize: 12,
                     ),
                   ),

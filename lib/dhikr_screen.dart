@@ -102,23 +102,12 @@ class _DhikrScreenState extends State<DhikrScreen> {
         return Directionality(
           textDirection: languageProvider.textDirection,
           child: Scaffold(
-            backgroundColor: isLightMode
-                ? Colors.white
-                : themeProvider.backgroundColor,
+            backgroundColor: themeProvider.screenBackgroundColor,
             extendBodyBehindAppBar: true,
             extendBody: true,
             body: Stack(
               children: [
-                // Background images covering entire screen
-                if (isLightMode)
-                  Positioned.fill(
-                    child: Image.asset(
-                      'assets/background_elements/3_background.png',
-                      fit: BoxFit.cover,
-                      color: Colors.white.withOpacity(0.7),
-                      colorBlendMode: BlendMode.lighten,
-                    ),
-                  ),
+                // Background images for dark mode only
                 if (!isLightMode) ...[
                   Positioned.fill(
                     child: Image.asset(
