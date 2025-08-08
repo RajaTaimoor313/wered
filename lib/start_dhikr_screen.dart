@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
+import 'dhikr_provider.dart';
 
 class StartDhikrScreen extends StatefulWidget {
   final String dhikrTitle;
@@ -51,13 +52,27 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
   }
 
   void _saveDhikr() {
+    final dhikrProvider = Provider.of<DhikrProvider>(context, listen: false);
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    
+    dhikrProvider.saveDhikr(
+      title: widget.dhikrTitle,
+      titleArabic: widget.dhikrTitleArabic,
+      subtitle: widget.dhikrSubtitle,
+      subtitleArabic: widget.dhikrSubtitleArabic,
+      arabic: widget.dhikrArabic,
+      target: widget.target,
+      currentCount: _currentCount,
+    );
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          Provider.of<LanguageProvider>(context, listen: false).isArabic
-              ? 'تم حفظ الذكر'
-              : 'Dhikr saved',
+          languageProvider.isArabic
+              ? 'تم حفظ الذكر بنجاح'
+              : 'Dhikr saved successfully',
         ),
+        backgroundColor: Colors.green,
       ),
     );
   }
@@ -189,7 +204,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                         style: TextStyle(
                                           fontSize: 32,
                                           fontFamily: 'Amiri',
-                                          color: const Color(0xFF2E7D32),
+                                          color: isLightMode ? const Color(0xFF1F1F1F) : const Color(0xFF392852),
                                           height: 1.5,
                                         ),
                                         textAlign: TextAlign.center,
@@ -204,7 +219,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
-                                          color: const Color(0xFF2E7D32),
+                                          color: isLightMode ? const Color(0xFF1F1F1F) : const Color(0xFF392852),
                                           fontFamily: amiriFont,
                                         ),
                                         textAlign: TextAlign.center,
@@ -217,9 +232,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                             : widget.dhikrSubtitle,
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: const Color(
-                                            0xFF2E7D32,
-                                          ).withOpacity(0.7),
+                                          color: isLightMode ? const Color(0xFF1F1F1F).withOpacity(0.7) : const Color(0xFF392852).withOpacity(0.7),
                                           fontFamily: amiriFont,
                                         ),
                                         textAlign: TextAlign.center,
@@ -235,7 +248,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                     // Minus button
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF2E7D32),
+                                        color: isLightMode ? const Color(0xFF051F20) : Colors.white,
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
@@ -249,9 +262,9 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                       ),
                                       child: IconButton(
                                         onPressed: _decrementCounter,
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.remove,
-                                          color: Colors.white,
+                                          color: isLightMode ? Colors.white : const Color(0xFF392852),
                                           size: 24,
                                         ),
                                         padding: const EdgeInsets.all(16),
@@ -264,7 +277,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                       style: TextStyle(
                                         fontSize: 48,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color(0xFF2E7D32),
+                                        color: isLightMode ? const Color(0xFF1F1F1F) : Colors.white,
                                         fontFamily: amiriFont,
                                       ),
                                     ),
@@ -272,7 +285,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                     // Plus button
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF2E7D32),
+                                        color: isLightMode ? const Color(0xFF051F20) : Colors.white,
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
@@ -286,9 +299,9 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                       ),
                                       child: IconButton(
                                         onPressed: _incrementCounter,
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.add,
-                                          color: Colors.white,
+                                          color: isLightMode ? Colors.white : const Color(0xFF392852),
                                           size: 24,
                                         ),
                                         padding: const EdgeInsets.all(16),
@@ -301,40 +314,36 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                 Column(
                                   children: [
                                     // Save Dhikr button
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(
-                                          0xFF2E7D32,
-                                        ),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: const Size.fromHeight(48),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            24,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: _saveDhikr,
-                                      child: Text(
-                                        isArabic ? 'احفظ الذكر' : 'Save Dhikr',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: amiriFont,
-                                        ),
-                                      ),
-                                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isLightMode ? const Color(0xFF051F20) : Colors.white,
+                        foregroundColor: isLightMode ? Colors.white : const Color(0xFF392852),
+                        minimumSize: const Size.fromHeight(48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            24,
+                          ),
+                        ),
+                      ),
+                      onPressed: _saveDhikr,
+                      child: Text(
+                        isArabic ? 'احفظ الذكر' : 'Save Dhikr',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: amiriFont,
+                        ),
+                      ),
+                    ),
                                     const SizedBox(height: 12),
                                     // Reset button
                                     OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        side: const BorderSide(
-                                          color: Color(0xFF2E7D32),
+                                        side: BorderSide(
+                                          color: isLightMode ? const Color(0xFF051F20) : Colors.white,
                                           width: 1.5,
                                         ),
-                                        foregroundColor: const Color(
-                                          0xFF2E7D32,
-                                        ),
+                                        foregroundColor: isLightMode ? const Color(0xFF051F20) : Colors.white,
                                         minimumSize: const Size.fromHeight(48),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
@@ -347,7 +356,7 @@ class _StartDhikrScreenState extends State<StartDhikrScreen> {
                                         isArabic ? 'إعادة تعيين' : 'Reset',
                                         style: TextStyle(
                                           fontSize: 18,
-                                          color: const Color(0xFF2E7D32),
+                                          color: isLightMode ? const Color(0xFF051F20) : Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontFamily: amiriFont,
                                         ),

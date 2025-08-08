@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'splash_screen.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
+import 'dhikr_provider.dart';
 import 'app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => DhikrProvider()),
         ChangeNotifierProxyProvider<ThemeProvider, LanguageProvider>(
           create: (_) => LanguageProvider(),
           update: (_, themeProvider, languageProvider) {

@@ -43,6 +43,28 @@ class _NewKhitmaScreenState extends State<NewKhitmaScreen> {
               height: double.infinity,
               child: Stack(
                 children: [
+                  // Dark theme background with gradient and image
+                  if (themeProvider.isDarkMode)
+                    Positioned.fill(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Color(0xFF251629), Color(0xFF4C3B6E)],
+                          ),
+                        ),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.asset(
+                            'assets/background_elements/3_background.png',
+                            fit: BoxFit.cover,
+                            cacheWidth: 800,
+                            filterQuality: FilterQuality.medium,
+                          ),
+                        ),
+                      ),
+                    ),
                   // Background image for light mode only
                   if (!themeProvider.isDarkMode)
                     Positioned.fill(

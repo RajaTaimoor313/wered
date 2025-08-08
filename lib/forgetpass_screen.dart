@@ -25,7 +25,9 @@ class ForgetPassScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: themeProvider.gradientColors,
+                    colors: themeProvider.isDarkMode 
+                        ? themeProvider.gradientColors
+                        : [const Color(0xFF163832), const Color(0xFF235347)],
                   ),
                 ),
                 child: Stack(

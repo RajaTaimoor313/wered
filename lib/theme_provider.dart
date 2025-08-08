@@ -70,8 +70,7 @@ class ThemeProvider extends ChangeNotifier {
       _isDarkMode ? const Color(0xFF251629) : Colors.white;
   Color get cardBackgroundColor =>
       _isDarkMode ? Colors.white.withOpacity(0.1) : const Color(0xFFE8F5E8);
-  Color get borderColor =>
-      _isDarkMode ? Colors.white : const Color(0xFFE0E0E0);
+  Color get borderColor => _isDarkMode ? Colors.white : const Color(0xFFE0E0E0);
 
   // Progress colors
   Color get progressColor =>
@@ -81,19 +80,13 @@ class ThemeProvider extends ChangeNotifier {
 
   // Gradient colors
   List<Color> get gradientColors => _isDarkMode
-      ? [
-          const Color(0xFF251629),
-          const Color(0xFF4C3B6E),
-        ]
-      : [
-          const Color(0xFF235347),
-          const Color(0xFF235347),
-          const Color(0xFF235347),
-        ];
+      ? [const Color(0xFF251629), const Color(0xFF4C3B6E)]
+      : [Colors.white, Colors.white, Colors.white];
 
   // Background image overlay colors
   Color get backgroundImageOverlay => _isDarkMode
-      ? Colors.transparent // Let gradient show through in dark mode
+      ? Colors
+            .transparent // Let gradient show through in dark mode
       : Colors.transparent; // No overlay for light mode
 
   // Background image paths

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'profile_screen.dart';
 import 'theme_provider.dart';
 import 'language_provider.dart';
+import 'dhikr_provider.dart';
 import 'app_localizations.dart';
 import 'khitma_screen.dart';
 import 'bottom_nav_bar.dart';
@@ -222,8 +223,8 @@ class _ProgressSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, DhikrProvider>(
+      builder: (context, themeProvider, dhikrProvider, child) {
         final appLocalizations = AppLocalizations.of(context)!;
 
         return Column(
@@ -243,8 +244,10 @@ class _ProgressSection extends StatelessWidget {
                 Expanded(
                   child: _ProgressCard(
                     title: appLocalizations.dhikrGoal,
-                    progress: 0.5,
-                    subtitle: appLocalizations.dhikrOutOf,
+                    progress: dhikrProvider.dhikrProgress,
+                    subtitle: dhikrProvider.hasSavedDhikr
+                        ? dhikrProvider.dhikrProgressText
+                        : appLocalizations.dhikrOutOf,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -426,7 +429,8 @@ class _StreakSection extends StatelessWidget {
                   ),
                 ],
               ),
-        ),],
+            ),
+          ],
         );
       },
     );
@@ -503,83 +507,85 @@ class _MotivationalVerseSection extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-
-                  Text(
-                    appLocalizations.verseText,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: themeProvider.isDarkMode
-                          ? const Color(0xFF251629)
-                          : const Color(0xFF051F20),
-                      fontSize: 16,
-                      height: 1.4,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  // Decorative line with diamond
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 1,
-                          color: themeProvider.isDarkMode
-                              ? const Color(0xFF251629)
-                              : const Color(0xFF051F20),
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          appLocalizations.verseText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: themeProvider.isDarkMode
+                                ? const Color(0xFF251629)
+                                : const Color(0xFF051F20),
+                            fontSize: 16,
+                            height: 1.4,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 12),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: themeProvider.isDarkMode
-                              ? const Color(0xFF251629)
-                              : const Color(0xFF051F20),
-                          shape: BoxShape.circle,
+                        const SizedBox(height: 20),
+                        // Decorative line with diamond
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: themeProvider.isDarkMode
+                                    ? const Color(0xFF251629)
+                                    : const Color(0xFF051F20),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              width: 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: themeProvider.isDarkMode
+                                    ? const Color(0xFF251629)
+                                    : const Color(0xFF051F20),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: themeProvider.isDarkMode
+                                    ? const Color(0xFF251629)
+                                    : Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 1,
-                          color: themeProvider.isDarkMode
-                              ? const Color(0xFF251629)
-                              : Colors.white,
+                        const SizedBox(height: 16),
+                        Text(
+                          appLocalizations.surahAnNahl,
+                          style: TextStyle(
+                            color: themeProvider.isDarkMode
+                                ? const Color(0xFF251629)
+                                : const Color(0xFF051F20),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    appLocalizations.surahAnNahl,
-                    style: TextStyle(
-                      color: themeProvider.isDarkMode
-                          ? const Color(0xFF251629)
-                          : const Color(0xFF051F20),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "(16:128)",
-                    style: TextStyle(
-                      color: themeProvider.isDarkMode
-                          ? const Color(0xFF251629)
-                          : const Color(0xFF051F20),
-                      fontSize: 12,
+                        const SizedBox(height: 4),
+                        Text(
+                          "(16:128)",
+                          style: TextStyle(
+                            color: themeProvider.isDarkMode
+                                ? const Color(0xFF251629)
+                                : const Color(0xFF051F20),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
           ],
-        ),
-        )],
-    );
+        );
       },
     );
   }
