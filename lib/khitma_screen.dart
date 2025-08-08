@@ -129,7 +129,7 @@ class _KhitmaScreenState extends State<KhitmaScreen> {
                       ? mediaQuery.size.height * 0.40
                       : mediaQuery.size.height * 0.4,
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
+                    padding: const EdgeInsets.fromLTRB(24, 32, 24, 60),
                     decoration: BoxDecoration(
                       gradient: themeProvider.isDarkMode
                           ? const LinearGradient(

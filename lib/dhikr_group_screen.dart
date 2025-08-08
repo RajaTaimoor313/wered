@@ -202,9 +202,7 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                                 ? const Color(
                                                     0xFFCCCCCC,
                                                   ) // Light mode selected tab
-                                                : const Color(
-                                                    0xFFFFFFFF,
-                                                  )) ,
+                                                : const Color(0xFFFFFFFF)),
                                       borderRadius: BorderRadius.only(
                                         topLeft: const Radius.circular(26),
                                         bottomLeft: const Radius.circular(26),
@@ -219,10 +217,25 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                           color: _selectedTab == 0
                                               ? (isLightMode
                                                     ? const Color(0xFFFFFFFF)
-                                                    : const Color.fromARGB(255, 57, 40, 82))
+                                                    : const Color.fromARGB(
+                                                        255,
+                                                        57,
+                                                        40,
+                                                        82,
+                                                      ))
                                               : (isLightMode
-                                                    ? const Color.fromARGB(255, 5, 31, 32)
-                                                    : const Color.fromARGB(255, 204, 204, 204)),
+                                                    ? const Color.fromARGB(
+                                                        255,
+                                                        5,
+                                                        31,
+                                                        32,
+                                                      )
+                                                    : const Color.fromARGB(
+                                                        255,
+                                                        204,
+                                                        204,
+                                                        204,
+                                                      )),
                                           fontFamily: amiriFont,
                                         ),
                                       ),
@@ -255,9 +268,7 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                                 ? const Color(
                                                     0xFFCCCCCC,
                                                   ) // Light mode selected
-                                                : const Color(
-                                                    0xFFFFFFFF,
-                                                  )),
+                                                : const Color(0xFFFFFFFF)),
                                       borderRadius: BorderRadius.only(
                                         topRight: const Radius.circular(26),
                                         bottomRight: const Radius.circular(26),
@@ -272,10 +283,25 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                           color: _selectedTab == 1
                                               ? (isLightMode
                                                     ? const Color(0xFFFFFFFF)
-                                                    : const Color.fromARGB(255, 57, 40, 82))
+                                                    : const Color.fromARGB(
+                                                        255,
+                                                        57,
+                                                        40,
+                                                        82,
+                                                      ))
                                               : (isLightMode
-                                                    ? const Color.fromARGB(255, 5, 31, 32)
-                                                    : const Color.fromARGB(255, 204, 204, 204)),
+                                                    ? const Color.fromARGB(
+                                                        255,
+                                                        5,
+                                                        31,
+                                                        32,
+                                                      )
+                                                    : const Color.fromARGB(
+                                                        255,
+                                                        204,
+                                                        204,
+                                                        204,
+                                                      )),
                                           fontFamily: amiriFont,
                                         ),
                                       ),
