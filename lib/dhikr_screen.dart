@@ -438,68 +438,241 @@ class _DhikrScreenState extends State<DhikrScreen> {
                               onTap: () {
                                 showDialog(
                                   context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(
-                                      isArabic
-                                          ? 'أضف ذكر مخصص'
-                                          : 'Add Custom Dhikr',
-                                      style: TextStyle(
-                                        color: dhikrCardTextColor,
-                                        fontFamily: amiriFont,
-                                      ),
+                                  barrierDismissible: true,
+                                  builder: (context) => Theme(
+                                    data: Theme.of(context).copyWith(
+                                      dialogBackgroundColor: isLightMode 
+                                          ? Colors.white 
+                                          : const Color(0xFF2A2A2A),
                                     ),
-                                    content: TextField(
-                                      controller: _customDhikrController,
-                                      decoration: InputDecoration(
-                                        hintText: isArabic
-                                            ? 'أدخل الذكر المخصص'
-                                            : 'Enter custom dhikr',
-                                        hintStyle: TextStyle(
-                                          color: dhikrCardTextColor.withOpacity(
-                                            0.7,
-                                          ),
-                                          fontFamily: amiriFont,
+                                    child: AlertDialog(
+                                      backgroundColor: isLightMode 
+                                          ? Colors.white 
+                                          : const Color(0xFF2A2A2A),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        side: BorderSide(
+                                          color: isLightMode 
+                                              ? borderColor 
+                                              : darkBorderColor,
+                                          width: 1.5,
                                         ),
                                       ),
-                                      style: TextStyle(
-                                        color: dhikrCardTextColor,
-                                        fontFamily: amiriFont,
+                                      elevation: isLightMode ? 8 : 12,
+                                      shadowColor: isLightMode 
+                                          ? Colors.black26 
+                                          : Colors.black54,
+                                      title: Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: isLightMode 
+                                                  ? greenColor.withOpacity(0.1) 
+                                                  : creamColor.withOpacity(0.1),
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: Icon(
+                                              Icons.add_circle_outline,
+                                              color: isLightMode ? greenColor : creamColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              isArabic
+                                                  ? 'أضف ذكر مخصص'
+                                                  : 'Add Custom Dhikr',
+                                              style: TextStyle(
+                                                color: isLightMode 
+                                                    ? dhikrCardTextColor 
+                                                    : creamColor,
+                                                fontFamily: amiriFont,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            isArabic
+                                                ? 'أدخل النص المخصص للذكر الذي تريد إضافته'
+                                                : 'Enter the custom text for the dhikr you want to add',
+                                            style: TextStyle(
+                                              color: isLightMode 
+                                                  ? dhikrCardTextColor.withOpacity(0.7) 
+                                                  : creamColor.withOpacity(0.8),
+                                              fontFamily: amiriFont,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: isLightMode 
+                                                  ? cardColor 
+                                                  : darkCardColor,
+                                              borderRadius: BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: isLightMode 
+                                                    ? borderColor 
+                                                    : darkBorderColor,
+                                                width: 1.2,
+                                              ),
+                                            ),
+                                            child: TextField(
+                                              controller: _customDhikrController,
+                                              maxLines: 3,
+                                              minLines: 1,
+                                              textDirection: isArabic 
+                                                  ? TextDirection.rtl 
+                                                  : TextDirection.ltr,
+                                              decoration: InputDecoration(
+                                                hintText: isArabic
+                                                    ? 'مثال: لا إله إلا الله'
+                                                    : 'Example: La ilaha illa Allah',
+                                                hintStyle: TextStyle(
+                                                  color: isLightMode 
+                                                      ? dhikrCardTextColor.withOpacity(0.5) 
+                                                      : creamColor.withOpacity(0.5),
+                                                  fontFamily: amiriFont,
+                                                  fontSize: 14,
+                                                ),
+                                                border: InputBorder.none,
+                                                contentPadding: const EdgeInsets.all(16),
+                                              ),
+                                              style: TextStyle(
+                                                color: isLightMode 
+                                                    ? dhikrCardTextColor 
+                                                    : creamColor,
+                                                fontFamily: amiriFont,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                                      actions: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: OutlinedButton(
+                                                style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                    color: isLightMode 
+                                                        ? dhikrCardTextColor.withOpacity(0.3) 
+                                                        : creamColor.withOpacity(0.3),
+                                                    width: 1.5,
+                                                  ),
+                                                  foregroundColor: isLightMode 
+                                                      ? dhikrCardTextColor 
+                                                      : creamColor,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                                ),
+                                                onPressed: () {
+                                                  _customDhikrController.clear();
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text(
+                                                  isArabic ? 'إلغاء' : 'Cancel',
+                                                  style: TextStyle(
+                                                    fontFamily: amiriFont,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: isLightMode 
+                                                      ? greenColor 
+                                                      : creamColor,
+                                                  foregroundColor: isLightMode 
+                                                      ? Colors.white 
+                                                      : dhikrCardTextColor,
+                                                  elevation: isLightMode ? 2 : 4,
+                                                  shadowColor: isLightMode 
+                                                      ? Colors.black26 
+                                                      : Colors.black45,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                                ),
+                                                onPressed: () {
+                                                  if (_customDhikrController.text.trim().isNotEmpty) {
+                                                    setState(() {
+                                                      _dhikrList.add({
+                                                        'title': _customDhikrController.text.trim(),
+                                                        'titleArabic': _customDhikrController.text.trim(),
+                                                        'subtitle': isArabic ? 'ذكر مخصص' : 'Custom Dhikr',
+                                                        'subtitleArabic': 'ذكر مخصص',
+                                                        'arabic': _customDhikrController.text.trim(),
+                                                      });
+                                                      _customDhikrController.clear();
+                                                    });
+                                                    Navigator.of(context).pop();
+                                                    // Show success feedback
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          isArabic 
+                                                              ? 'تم إضافة الذكر المخصص بنجاح' 
+                                                              : 'Custom dhikr added successfully',
+                                                          style: TextStyle(fontFamily: amiriFont),
+                                                        ),
+                                                        backgroundColor: isLightMode 
+                                                            ? greenColor 
+                                                            : creamColor,
+                                                        behavior: SnackBarBehavior.floating,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                        margin: const EdgeInsets.all(16),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.add,
+                                                      size: 18,
+                                                      color: isLightMode 
+                                                          ? Colors.white 
+                                                          : dhikrCardTextColor,
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      isArabic ? 'إضافة' : 'Add',
+                                                      style: TextStyle(
+                                                        fontFamily: amiriFont,
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text(
-                                          isArabic ? 'إلغاء' : 'Cancel',
-                                          style: TextStyle(
-                                            color: dhikrCardTextColor,
-                                            fontFamily: amiriFont,
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _dhikrList.add({
-                                              'title':
-                                                  _customDhikrController.text,
-                                              'subtitle': '',
-                                              'arabic': '',
-                                            });
-                                            _customDhikrController.clear();
-                                          });
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text(
-                                          isArabic ? 'إضافة' : 'Add',
-                                          style: TextStyle(
-                                            color: dhikrCardTextColor,
-                                            fontFamily: amiriFont,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 );
                               },

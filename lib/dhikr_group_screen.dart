@@ -167,8 +167,12 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
                             color: isLightMode
-                                ? const Color(0xFFE8E8E8)
-                                : const Color(0xFF2A2A2A),
+                                ? const Color(
+                                    0xFFDAF1DE,
+                                  ) // Light mode outer container color
+                                : const Color(
+                                    0xFFE3D9F6,
+                                  ), // Dark mode outer container color
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
@@ -187,33 +191,40 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: _selectedTab == 0
-                                          ? Colors.white
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(26),
-                                      boxShadow: _selectedTab == 0
-                                          ? [
-                                              BoxShadow(
-                                                color: Colors.black.withOpacity(
-                                                  0.1,
-                                                ),
-                                                blurRadius: 4,
-                                                offset: const Offset(0, 2),
-                                              ),
-                                            ]
-                                          : null,
+                                          ? (isLightMode
+                                                ? const Color(
+                                                    0xFF235347,
+                                                  ) // Light mode selected tab
+                                                : const Color(
+                                                    0xFFF2EDE0,
+                                                  )) // Dark mode selected tab
+                                          : (isLightMode
+                                                ? const Color(
+                                                    0xFFCCCCCC,
+                                                  ) // Light mode selected tab
+                                                : const Color(
+                                                    0xFFFFFFFF,
+                                                  )) ,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: const Radius.circular(26),
+                                        bottomLeft: const Radius.circular(26),
+                                      ),
                                     ),
-                                    child: Text(
-                                      isArabic ? 'منضم' : 'Joined',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: _selectedTab == 0
-                                            ? const Color(0xFF2D2D2D)
-                                            : (isLightMode
-                                                  ? Colors.grey[600]
-                                                  : Colors.grey[400]),
-                                        fontFamily: amiriFont,
+                                    child: Center(
+                                      child: Text(
+                                        isArabic ? 'منضم' : 'Joined',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: _selectedTab == 0
+                                              ? (isLightMode
+                                                    ? const Color(0xFFFFFFFF)
+                                                    : const Color.fromARGB(255, 57, 40, 82))
+                                              : (isLightMode
+                                                    ? const Color.fromARGB(255, 5, 31, 32)
+                                                    : const Color.fromARGB(255, 204, 204, 204)),
+                                          fontFamily: amiriFont,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -233,33 +244,40 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: _selectedTab == 1
-                                          ? Colors.white
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(26),
-                                      boxShadow: _selectedTab == 1
-                                          ? [
-                                              BoxShadow(
-                                                color: Colors.black.withOpacity(
-                                                  0.1,
-                                                ),
-                                                blurRadius: 4,
-                                                offset: const Offset(0, 2),
-                                              ),
-                                            ]
-                                          : null,
+                                          ? (isLightMode
+                                                ? const Color(
+                                                    0xFF235347,
+                                                  ) // Light mode selected
+                                                : const Color(
+                                                    0xFFF2EDE0,
+                                                  )) // Dark mode selected
+                                          : (isLightMode
+                                                ? const Color(
+                                                    0xFFCCCCCC,
+                                                  ) // Light mode selected
+                                                : const Color(
+                                                    0xFFFFFFFF,
+                                                  )),
+                                      borderRadius: BorderRadius.only(
+                                        topRight: const Radius.circular(26),
+                                        bottomRight: const Radius.circular(26),
+                                      ),
                                     ),
-                                    child: Text(
-                                      isArabic ? 'استكشاف' : 'Explore',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: _selectedTab == 1
-                                            ? const Color(0xFF2D2D2D)
-                                            : (isLightMode
-                                                  ? Colors.grey[600]
-                                                  : Colors.grey[400]),
-                                        fontFamily: amiriFont,
+                                    child: Center(
+                                      child: Text(
+                                        isArabic ? 'استكشاف' : 'Explore',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: _selectedTab == 1
+                                              ? (isLightMode
+                                                    ? const Color(0xFFFFFFFF)
+                                                    : const Color.fromARGB(255, 57, 40, 82))
+                                              : (isLightMode
+                                                    ? const Color.fromARGB(255, 5, 31, 32)
+                                                    : const Color.fromARGB(255, 204, 204, 204)),
+                                          fontFamily: amiriFont,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -268,6 +286,7 @@ class _DhikrGroupScreenState extends State<DhikrGroupScreen> {
                             ],
                           ),
                         ),
+
                         const SizedBox(height: 24),
                         // Empty space for future content
                         Expanded(
