@@ -169,8 +169,6 @@ class _NewKhitmaScreenState extends State<NewKhitmaScreen> {
                                   onTap: () {
                                     setState(() {
                                       selectedDays = option['days'];
-                                      daysController.text = option['days']
-                                          .toString();
                                     });
                                   },
                                   child: Container(

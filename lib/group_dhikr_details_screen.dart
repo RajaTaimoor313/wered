@@ -31,6 +31,8 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
   late int _currentCount;
   final TextEditingController _addRepetitionsController =
       TextEditingController();
+  final TextEditingController _yourRepetitionsController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
   @override
   void dispose() {
     _addRepetitionsController.dispose();
+    _yourRepetitionsController.dispose();
     super.dispose();
   }
 
@@ -155,98 +158,6 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
     );
   }
 
-  void _showYourRepetitions() {
-    showDialog(
-      context: context,
-      builder: (context) => Consumer2<ThemeProvider, LanguageProvider>(
-        builder: (context, themeProvider, languageProvider, child) {
-          final isArabic = languageProvider.isArabic;
-          final isDarkMode = themeProvider.isDarkMode;
-          return AlertDialog(
-            backgroundColor: isDarkMode
-                ? const Color(0xFF2D1B69)
-                : Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            title: Text(
-              isArabic ? 'تكراراتك' : 'Your Repetitions',
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : const Color(0xFF2D1B69),
-                fontWeight: FontWeight.bold,
-                fontFamily: isArabic ? 'Amiri' : null,
-              ),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  isArabic ? 'التكرارات الحالية:' : 'Current Repetitions:',
-                  style: TextStyle(
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.9)
-                        : const Color(0xFF2D1B69),
-                    fontSize: 16,
-                    fontFamily: isArabic ? 'Amiri' : null,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '$_currentCount',
-                  style: TextStyle(
-                    color: isDarkMode ? Colors.white : const Color(0xFF2E7D32),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  isArabic ? 'الهدف:' : 'Target:',
-                  style: TextStyle(
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.9)
-                        : const Color(0xFF2D1B69),
-                    fontSize: 16,
-                    fontFamily: isArabic ? 'Amiri' : null,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${widget.target}',
-                  style: TextStyle(
-                    color: isDarkMode ? Colors.white : const Color(0xFF2E7D32),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isDarkMode
-                      ? Colors.white
-                      : const Color(0xFF2E7D32),
-                  foregroundColor: isDarkMode
-                      ? const Color(0xFF2D1B69)
-                      : Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  isArabic ? 'موافق' : 'OK',
-                  style: TextStyle(fontFamily: isArabic ? 'Amiri' : null),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer2<ThemeProvider, LanguageProvider>(
@@ -267,12 +178,24 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Color(0xFF2D1B69), Color(0xFF1A0F3A)],
+                        colors: [Color(0xFF251629), Color(0xFF4C3B6E)],
                       ),
                     )
                   : null,
               child: Stack(
                 children: [
+                  // Background image for both themes
+                  Positioned.fill(
+                    child: Opacity(
+                      opacity: isDarkMode ? 0.5 : 1.0,
+                      child: Image.asset(
+                        'assets/background_elements/3_background.png',
+                        fit: BoxFit.cover,
+                        cacheWidth: 800,
+                        filterQuality: FilterQuality.medium,
+                      ),
+                    ),
+                  ),
                   // Background pattern (only in dark mode)
                   if (isDarkMode)
                     Positioned.fill(
@@ -528,42 +451,54 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
 
                                   const SizedBox(height: 50),
 
-                                  // Your Repetitions button
+                                  // Your Repetitions text field
                                   Container(
-                                    width: double.infinity,
-                                    height: 50,
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 20,
                                     ),
-                                    child: OutlinedButton(
-                                      onPressed: _showYourRepetitions,
-                                      style: OutlinedButton.styleFrom(
-                                        side: BorderSide(
-                                          color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.grey[400]!,
-                                          width: 1.5,
-                                        ),
-                                        backgroundColor: isDarkMode
-                                            ? Colors.transparent
-                                            : Colors.grey[100],
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                        ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: isDarkMode
+                                            ? Colors.white.withOpacity(0.3)
+                                            : Colors.grey[300]!,
+                                        width: 1,
                                       ),
-                                      child: Text(
-                                        languageProvider.isArabic
+                                    ),
+                                    child: TextField(
+                                      controller: _yourRepetitionsController,
+                                      keyboardType: TextInputType.number,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontFamily: isArabic ? 'Amiri' : null,
+                                      ),
+                                      decoration: InputDecoration(
+                                        labelText: languageProvider.isArabic
                                             ? 'تكراراتك'
                                             : 'Your Repetitions',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
+                                        labelStyle: TextStyle(
                                           color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.grey[700],
+                                              ? Colors.white.withOpacity(0.7)
+                                              : Colors.grey[600],
                                           fontFamily: isArabic ? 'Amiri' : null,
+                                        ),
+                                        hintText: languageProvider.isArabic
+                                            ? 'أدخل عدد تكراراتك'
+                                            : 'Enter your repetitions',
+                                        hintStyle: TextStyle(
+                                          color: isDarkMode
+                                              ? Colors.white.withOpacity(0.5)
+                                              : Colors.grey[500],
+                                          fontFamily: isArabic ? 'Amiri' : null,
+                                        ),
+                                        border: InputBorder.none,
+                                        contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 16,
                                         ),
                                       ),
                                     ),
@@ -581,10 +516,12 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
                                     child: ElevatedButton(
                                       onPressed: _showAddRepetitionsDialog,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(
-                                          0xFF2E7D32,
-                                        ),
-                                        foregroundColor: Colors.white,
+                                        backgroundColor: isDarkMode
+                                            ? const Color(0xFFF2EDE0)
+                                            : const Color(0xFF235347),
+                                        foregroundColor: isDarkMode
+                                            ? const Color(0xFF392852)
+                                            : const Color(0xFFFFFFFF),
                                         elevation: 2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
@@ -599,7 +536,9 @@ class _GroupDhikrDetailsScreenState extends State<GroupDhikrDetailsScreen> {
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                          color: isDarkMode
+                                            ? const Color(0xFF392852)
+                                            : const Color(0xFFFFFFFF),
                                           fontFamily: isArabic ? 'Amiri' : null,
                                         ),
                                       ),

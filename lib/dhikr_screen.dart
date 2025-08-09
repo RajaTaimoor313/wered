@@ -703,7 +703,7 @@ class _DhikrScreenState extends State<DhikrScreen> {
                               hintStyle: TextStyle(
                                 color: isLightMode
                                     ? fadedTextColor
-                                    : creamColor.withOpacity(0.7),
+                                    : creamColor,
                                 fontFamily: amiriFont,
                               ),
                               filled: true,

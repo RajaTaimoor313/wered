@@ -206,7 +206,9 @@ class _ProfileSection extends StatelessWidget {
               },
               child: Icon(
                 Icons.notifications_none,
-                color: themeProvider.primaryTextColor,
+                color: themeProvider.isDarkMode
+                    ? Color(0xFFFFFFFF) // White in dark mode
+                    : Color(0xFF051F20), // Dark teal in light mode
                 size: 24,
               ),
             ),
@@ -247,15 +249,15 @@ class _ProgressSection extends StatelessWidget {
                     progress: dhikrProvider.dhikrProgress,
                     subtitle: dhikrProvider.hasSavedDhikr
                         ? dhikrProvider.dhikrProgressText
-                        : appLocalizations.dhikrOutOf,
+                        : '0 out of 0',
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: _ProgressCard(
                     title: appLocalizations.khitmaGoal,
-                    progress: 0.5,
-                    subtitle: appLocalizations.juzzOutOf,
+                    progress: 0.0,
+                    subtitle: '0 out of 0',
                   ),
                 ),
               ],

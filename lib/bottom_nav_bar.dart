@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'app_localizations.dart';
+import 'dhikr_group_screen.dart';
+import 'khitma_group_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -12,6 +14,82 @@ class BottomNavBar extends StatelessWidget {
     required this.selectedIndex,
     required this.onItemTapped,
   });
+
+  void _showGroupsDialog(BuildContext context, ThemeProvider themeProvider) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: themeProvider.isDarkMode 
+              ? const Color(0xFF4A148C) // Deep purple for dark mode
+              : Colors.white, // White for light mode
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(
+            appLocalizations.groups,
+            style: TextStyle(
+              color: themeProvider.isDarkMode 
+                  ? Colors.white // White text in dark mode
+                  : const Color(0xFF2D5A27), // Dark green text in light mode
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Dhikr Groups option
+              ListTile(
+                title: Text(
+                  'Dhikr Groups',
+                  style: TextStyle(
+                    color: themeProvider.isDarkMode 
+                        ? Colors.white // White text in dark mode
+                        : const Color(0xFF2D5A27), // Dark green text in light mode
+                    fontSize: 16,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DhikrGroupScreen(),
+                    ),
+                  );
+                },
+              ),
+              // Khitma Groups option
+              ListTile(
+                title: Text(
+                  'Khitma Groups',
+                  style: TextStyle(
+                    color: themeProvider.isDarkMode 
+                        ? Colors.white // White text in dark mode
+                        : const Color(0xFF2D5A27), // Dark green text in light mode
+                    fontSize: 16,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const KhitmaGroupScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +144,7 @@ class BottomNavBar extends StatelessWidget {
                     icon: Icons.group,
                     label: appLocalizations.groups,
                     isSelected: selectedIndex == 3,
-                    onTap: () => onItemTapped(3),
+                    onTap: () => _showGroupsDialog(context, themeProvider),
                   ),
                   _NavItem(
                     icon: Icons.person,

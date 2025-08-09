@@ -162,8 +162,6 @@ class _KhitmaNewgroupScreenState extends State<KhitmaNewgroupScreen> {
                                   onTap: () {
                                     setState(() {
                                       selectedDays = option['days'];
-                                      groupNameController.text = option['days']
-                                          .toString();
                                     });
                                   },
                                   child: Container(
@@ -245,7 +243,7 @@ class _KhitmaNewgroupScreenState extends State<KhitmaNewgroupScreen> {
                               ),
                               child: TextField(
                                 controller: groupMembersController,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.number,
                                 style: TextStyle(
                                   color: themeProvider.isDarkMode
                                       ? Colors.white
